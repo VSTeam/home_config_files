@@ -1,0 +1,17 @@
+Config files and folders.
+
+The way I did this was by putting ~ under version control (originally
+I wanted to have a repo sitting in ~, but that requires either constantly
+copying changes or using links, and git doesn't handle links well.
+
+As a result, I had to use .gitignore as the ignore for this repo only,
+and so my global gitignore file had to be renamed .gitignore_global,
+which is fine because you specify the file in .gitconfig.
+
+Whenever you want to add a file to the repo, you need to add a line
+to .gitignore. Otherwise, you just have to go git commit -a
+and git push origin master after any config alterations.
+
+Notes regarding how config works are in config_notes, although I don't
+really maintain that file so there may be incorrect things from
+misunderstandings I had in the past.

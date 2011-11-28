@@ -1,0 +1,34 @@
+[user]
+	name = Steven Troxler
+	email = steven.troxler@berkeleyanalytics.com
+[github]
+	user = stroxler
+[core]
+	editor = vi
+	excludesfile = /home/st/.gitignore_global
+[alias]
+	ci = commit -a
+	cp = commit -a -m"Checkpoint"
+	co = checkout
+	st = status
+	br = branch
+        ltag = tag -l -n3
+        uncommit = reset HEAD^
+	slog = log --oneline --topo-order --graph
+        slog2 = log --graph --topo-order --abbrev-commit --date=relative --pretty=format:'%C(yellow)%h%Creset %s %Cgreen(%cr) %C(red)%d%Creset %C(bold blue)[%an]%Creset'
+	wdiff = diff --color-words
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	pager = true
+	ui = true
+	#wtf = true
+[diff]
+	rename = copy
+[push]
+	default = tracking
+[branch]
+	autosetupmerge = true
+[merge]
+	tool = [xxdiff]

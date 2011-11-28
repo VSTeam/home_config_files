@@ -1,0 +1,52 @@
+.bashrc does three important things (it may do others):
+  (1) It sets my prompt. This is the PS1 business. Fernando considers
+      the part about showing current branch to be uber-important.
+  (2) It resets the up and down arrows to not just look thru old commands
+      but to also consider what has been typed so far, and sets up git tab
+      completion
+  (3) It gives me colored ls as a default
+.gitconfig 
+   Mostly not that important I think. Much of it I don't understand.
+   Probably the biggest thing it does is give all those aliases for commands
+   that Fernando thinks are useful. Of course, I need to get used to the aliases
+   or they won't do me any good.
+.gitignore
+   This is obvious. The only thing that is easy to forget is that this does nothing
+   unless it is called in .gitconfig ... if your .gitignore isn't working then you
+   should make sure there is an excludesfile variable pointing to it in the [core]
+   block of .gitconfig.
+.bash_git_completion
+   It contains stuff called by .bashrc to do git tab-completion.
+.bash_utils
+   Does a few things for .bashrc... the most obvious is that it defines a bunch
+   of colors. It also has quite a lot of functions, but I don't know which functions
+   are useful and which aren't.
+.vimrc
+   This does two sets of things: first, it does obvious stuff like setting tab
+   rules and making column numbers show. Then, it calls programs from .vim.
+   I don't yet really understand the structure of vim programs, so I can't explain
+   much past that at this time.
+
+
+DIRECTORIES
+.config/ipython/profile_default/ipython_config.py
+   IPython stuff. I still need to find an example in order to set my ipython up.
+   In reality, I am pretty happy with the presets. The only things I want to change
+   are to auto-import some packages.
+.vim
+   This is where various vim programs go. I don't really understand how this stuff
+   works, but my experience thus far is that vim programs generally just do what
+   they are supposed to do without too much hassel (I had the opposite experience
+   in emacs).
+
+
+********************* IPython and editor config stuff to work on ******************
+  *** IPython and Vim. If you get this to work, a lot of the ***
+  *** other Vim (as python ide) stuff may matter less ***
+http://pirsquared.org/blog/2011/07/28/vim-ipython/
+https://github.com/ivanov/vim-ipython
+
+
+
+   ** notebook demo... also apparently a nice general blog **
+http://lighthouseinthesky.blogspot.com/2011/09/review-ipython-notebooks.html
