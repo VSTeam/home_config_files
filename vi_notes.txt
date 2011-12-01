@@ -1,3 +1,26 @@
+*******************************************************************
+******** I am on page 61 (start of ch 5) in LtVVE, 7th ed *********
+*******************************************************************
+
+*Opening vi*
+vi +3 file
+    opens file and puts cursor on line 3
+vi + file
+    opens file at end instead of beginning.
+vi /foo file
+    opens file and puts cursor at 1st occurence of foo
+vi -R file
+    opens as read-only. A good way to make sure you don't accidentally
+    change code when you open something for reference.
+      The command view file is equivalent.
+    If you do want to make changes, you can do :w! or :wq! to override
+    the read-only (assuming you have permission), but the warning might remind
+    you of a problem and then you could do :w newfilename to save a copy.
+vi -r
+    Opens any recovered buffers after the system goes down.
+    vi -r filename will open just one specific recovered buffer.
+
+
 *Movement*
 k,j,l,h for movement, which is great for left and right.
     For up and down, I would just use arrows or alternative commands,
@@ -19,12 +42,15 @@ It is true in general, but I want to emphasize in the context of movement,
 C-b, C-f, C-u and C-d scroll up and down a full and half screen, respectively.
     pgup and pgdwn work fine for C-b and C-f, so they aren't really needed.
     Buc C-u and C-d are probably better since you can keep a lot of context.
+C-e and C-y are similar, scroll forward and backward one line. The difference
+    relative to k and j is that your view moves with the cursor.
 b, w, B, W to go back and forth a word 
     (B and W include punctuation and whitespace in the idea of 'word'
 `number` + G will go to a line number.
     Note that this is an exception of the rule that `n` + `command`
         repeats `command` `n` times.
     gg and G go to the top and bottom of the file.
+- and + take you to the last/first character of the prev/next line.
 e takes your cursor to the end of a word. If you are in the middle
     of a word, it takes you to the end of that word; if at the end,
     it takes you to the end of the next word.
@@ -42,6 +68,45 @@ g is an oddball movement modifier (aside from just gg = go to start of file):
     for opening and closing parentheses, etc.
     If you have multiple nestings, you can use 2]) and other such
     to go to outer layers.
+z is a scroller (but not movement... the cursor stays where it is):
+    z-return will scroll down until the current line is at the top
+    z-. will center the screen on the current line
+    z-- (zee minus) will scroll up till the current line is at bottom
+H, M, L, nH, and nL are the opposite of z and C-u, C-d in a sense:
+    they move the cursor but don't change the view at all.
+    H moves the cursor as high as possible without redwawing, ie the top
+    6H moves the cursor 6 lines below the top
+    M moves the cursor to the middle
+    3L moves the cursor 3 lines above the lowest it can go, the bottom
+    L moves the cursor to the lowest it can go.
+n|, eg 5|, moves the cursor to column 5 of the current row.
+(, ), {, } move the cursor to the beginning of the current/next
+    sentence/paragraph respectively.
+    I can't remember what this means in the context of code... I think
+    most vim packages recognize functions as paragraphs, but I'm not sure
+    what a sentence is.
+
+*Movement by searches*
+f, F, t, T: stand for 'find' and 'to'. These are current line searches,
+    useful mostly for quick navigation within a line. They only look for
+    characters, not words.
+      fx and Fx will put the cursor on top of the next/previous 'x' in the
+    line, while tx will move to the character *before* next x and Tx to the
+    character *after* prev x.
+  ; will repeat the previous find command
+  , will repeat it in the opposite direction.
+/ and ?: forward and backward searches. Typing either of these will drop you
+    into the command line, where you type the text (which can't have a
+    return character), and then enter will bring you back up to the file
+    you are editing and search.
+        The last search you made stays available until you search again. So,
+    at any time, you can use `n` ('next') to repeat the search in the same
+    direction, or `N` to reverse the direction. Alternatively, you can do
+    `\-enter` or `?-enter`, in which case you don't have to remember the
+    direction of the prev search.
+        Note that if you are at a function call, and you use search to find
+    the function, one way of getting back to the call afterward would be to
+    repeat the search in the opposite direction.
 
 *Insertion*
 Use o and O for inserting lines.
@@ -74,7 +139,13 @@ J is important. It joins two lines, which is a tricky thing to do otherwise.
 *Assorted useful commands*
 u undoes the last action, and U undoes all changes to the current line
     (back to whenever you were last on a different line).
+C-R redoes the last undo (and I assume recursively), BUT at the moment
+    one of my plugins is overriding this. I need to fix it because redo
+    isn't a command I can do without.
 . repeats the previous command, whatever it was.
+~ toggles the case of a character and moves you one character over
+    (so you can use, eg, 7~ to toggle a word, but I'm not sure how you
+    just switch the current word's case...that's a different command.)
 
 
 *Cut, copy, and paste - type commands in vi*
@@ -100,6 +171,20 @@ p will put whatever is the last item in the yank ring, *after* the cursor.
     everything unexpected. I'm also not sure what the side panel is
     supposed to be used for.
 
+*Marks*
+You can mark any point in the file with any letter (I'll use x as generic).
+    NOTE: I'm not yet sure whether, in a single vi session, the marks apply
+    across all files. If so, that would be a good way to switch buffers, but
+    it could be that each open buffer has a separate dictionary of marks.
+mx: marks the current spot, naming the mark `x`.
+'x: moves to start of the line containing mark `x`
+`x (here I mean the backtick literally haha): to the character marked by `x`.
+`` (two backticks in a row): moves to the last mark
+'': returns to start of line of last mark (note the consistency of ` vs ')
+    NOTE: it's cool how vi uses " (register) '(marked line), `(marked char)
+    to refer to various dictionaries referencing user-set workspace objects.
+    So in general, any quote character references some user-set object.
+
 *Registers and Clipboard usage in vim*
 Below I discuss registers. These are important for understanding default
     cut and paste. But there bigger importance is in understanding how
@@ -108,6 +193,10 @@ Below I discuss registers. These are important for understanding default
     a new spot in a different file, only having to switch files once),
     how to recover old deletions (the numbered registers), and how to
     interact with the system clipboard (the + and * registers).
+--One last note in general: often registers are called buffers. I try to
+--reserve this term for files that are open, but I'm guessing that the source
+--code treats these essentially the same.
+--LtVE calls registers buffers for sure.
  There is a default register, and the notes above indicate
  its use (so you can cut or copy to the register using d or c or y,
  and paste from it using p). Every copy/cut overwrites this register;
@@ -137,6 +226,12 @@ Below I discuss registers. These are important for understanding default
    So, for example, you can say `"*yy` to copy a line, and
  `"+p` to paste. Of course, if you are already using a mouse anyway
  you can also do the middle-click that generally works in Ubuntu.
+   --
+ I don't yet know what commands apply, but you can do "x `command` to perform
+ a command on buffer x. I tested it with ~ as the command and it did not
+ seem to work, so the only ones I can say for sure work are P and p 
+ (and even then P does not work for me right now because one of my plugins
+ is interfering).
 
 *Setting options* - see ch7 of LVE -
 This is getting into customization; if you want it permanent you can put it in
