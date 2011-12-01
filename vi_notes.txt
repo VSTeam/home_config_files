@@ -1,0 +1,160 @@
+*Movement*
+k,j,l,h for movement, which is great for left and right.
+    For up and down, I would just use arrows or alternative commands,
+    because j and k are not all that great, ergonomically speaking.
+    Plus, they are on my left and I'd prefer to abuse my right :)
+It is true in general, but I want to emphasize in the context of movement,
+    the importance of numeric arguments. 10l will move 10 to the right,
+    etc. They aren't so useful for k,j,l,h because usually you don't want
+    to count, and obviously not for 0, g_, etc, but they are great for
+    things like `5b` or `2W,` and especially when you are using movement
+    in conjunction with change/delete commands, because then you need to
+    get the movement in all at once (when you are just moving and nothing
+    else, it's okay to just keep hitting `w`, but not so much for yanking).
+0, ^, and g_, $ for beginning, non-wtspc beginning, non-ws end, end of line.
+    It is worth pointing out that g is awkward. gg_ goes to the end of line,
+    but gg does to the top and gE, ge make e and E go backward, so the
+    directions are opposite. It messes up the usual nice relationship of
+    motion commands in vi... think of g as an 'irregular verb' (haha)
+C-b, C-f, C-u and C-d scroll up and down a full and half screen, respectively.
+    pgup and pgdwn work fine for C-b and C-f, so they aren't really needed.
+    Buc C-u and C-d are probably better since you can keep a lot of context.
+b, w, B, W to go back and forth a word 
+    (B and W include punctuation and whitespace in the idea of 'word'
+`number` + G will go to a line number.
+    Note that this is an exception of the rule that `n` + `command`
+        repeats `command` `n` times.
+    gg and G go to the top and bottom of the file.
+e takes your cursor to the end of a word. If you are in the middle
+    of a word, it takes you to the end of that word; if at the end,
+    it takes you to the end of the next word.
+    E does the same thing, treating punctuation as part of a
+    word.
+    Note that 8e and 8w do almost the same thing; the only difference
+    is that 8w takes you a bit farther to the start of the next word.
+g is an oddball movement modifier (aside from just gg = go to start of file):
+    gE is like E but backward, and ge like e but backward.
+    g_ goes to last non-blank char of line ($ goes to absolute last)
+% will go to matching {parenth, brackets, braces}
+[ and ] will go to surrounding brackets and braces, eg if you are
+    on the word "foo" in "[(, {, foo, ), }]" then you can use [[
+    and ]] to go to the opening and closing brackets, [( and ])
+    for opening and closing parentheses, etc.
+    If you have multiple nestings, you can use 2]) and other such
+    to go to outer layers.
+
+*Insertion*
+Use o and O for inserting lines.
+Use i, I, a, A for basic in-line, start and end of line.
+
+*Basic file commands*
+:sh will take you to a shell, then C-d will get you back to vim when done.
+    Doing !`command` lets you send just one command to the shell instead.
+:w, :q, :wq, :q! are very standard.
+    If you want to write to a new file name, do :w `filename`.
+    If you need to overwrite an existing file, do :w! `filename`.
+In normal mode, ZZ (have to capitalize!) will do same as :wq
+:e `filename` to open a file from ex mode. :e! reopens the current file.
+
+*Deletion and changing*
+x is like backspace (within a line), X like forward delete.
+d + `motion command` deletes. 
+    dd deletes the line, D deletes from cursor to end of line.
+r + `character` will replace any one character without leaving normal mode.
+s will delete the character under the cursor and go to insert
+    S will delete the line and go to insert. It keeps leading whitespace.
+c + `motion` will delete whatever d + `motion` would have, and go to insert.
+    C is like c + $ (like D is d + $)
+    cc will delete the whole line and go to insert *but*, unlike S, it
+        will leave whitespace (so it's like S but you stay tabbed over).
+J is important. It joins two lines, which is a tricky thing to do otherwise.
+    More specifically, it erases the newline at the end of the line you are
+    on, regardless of where you are. 2J will delete the next two newlines.
+
+*Assorted useful commands*
+u undoes the last action, and U undoes all changes to the current line
+    (back to whenever you were last on a different line).
+. repeats the previous command, whatever it was.
+
+
+*Cut, copy, and paste - type commands in vi*
+In vi, 'copy' is called yank and is not the same as clipboard copy
+    and 'paste' is called put and is not the same as clipboard paste.
+y + `movement` = yank
+    yy and Y both yank the current line (including whitespace).
+        Note that this is a failure of the UI to be consistent, since
+        commands like D and C affect to the end of the line.
+d + `movement`, or any other deletion, yanks when it deletes and therefore
+    is sort of like 'cutting'. When I say 'any other deletion' that is a
+    bit simplistic. For instance `x` and `c` lead to the deleted characters
+    being put in the `yank ring` (that's a vi-ified emacs term but whatever)
+    but `r` does not.
+p will put whatever is the last item in the yank ring, *after* the cursor.
+    This is slightly oversimplified: p puts after the cursor if you delete
+    or yank text using a movement command (even one that crosses from one line
+    to the next, like d100w). It puts on the *line below*, however, if
+    you delete or yank entire lines using dd, yy, cc.
+    Supposedly, P will do the same thing, *before* the cursor. But I
+    have found that it opens a side panel. I'm not sure why; maybe there
+    is something odd in my .vimrc file, but I thought I got rid of
+    everything unexpected. I'm also not sure what the side panel is
+    supposed to be used for.
+
+*Registers and Clipboard usage in vim*
+Below I discuss registers. These are important for understanding default
+    cut and paste. But there bigger importance is in understanding how
+    to do multiple cut-and-pastes intentionally (eg you could copy several
+    times from one file to named registers and then paste each block to
+    a new spot in a different file, only having to switch files once),
+    how to recover old deletions (the numbered registers), and how to
+    interact with the system clipboard (the + and * registers).
+ There is a default register, and the notes above indicate
+ its use (so you can cut or copy to the register using d or c or y,
+ and paste from it using p). Every copy/cut overwrites this register;
+   If you want to recover an older yank or delete or change, then you
+ need to use the default numbered registers. They are named just like
+ other registers (see below) except using numbers rather than letters
+ or symbols. So the default register is "1, and if you yank again, the
+ text that used to be in "1 will now be in "2, and so on. To paste
+ the text in the yank ring from 5 yanks/deletes ago, do `"5p`.
+   Note that although it's a small pain, you can nonetheless easily
+ enough hunt for an old yank/deletion if you have to by just pasting
+ and then hitting `u` until you find the right block of text.
+   We also can use our own named registers. If you know you want to
+ cut some text to paste, but you want to be able to wait a bit before
+ pasting it, you can cut/copy into registers. E.g. we could put 3 blocks
+ of code into registers "a, "b, and "c by typing `"ayy"` `"bd4b`, and
+ `"cC`, and then paste them, in any order we desire and possibly after
+ doing other cuts and pastes from the clipboard or the default registers,
+ using `"ap`, `"bp`, and `"cp`.
+    The symbols `*` and `+` can both be used to refer to the system
+ clipboard. This is the only way to cut from vi to the system without
+ using the mouse (you can always highlight and use the right click menue,
+ but that can be annoying), and also the only way to paste to vi from
+ the system without using the mouse. It works in the terminal and in
+ gvim, although the option is less important in gvim since you could use
+ the buttons up top in a pinch.
+   So, for example, you can say `"*yy` to copy a line, and
+ `"+p` to paste. Of course, if you are already using a mouse anyway
+ you can also do the middle-click that generally works in Ubuntu.
+
+*Setting options* - see ch7 of LVE -
+This is getting into customization; if you want it permanent you can put it in
+    your .vimrc file, otherwise you can do it once.
+Options are vi variables that set editing parameters. To set them, you use the
+    ex command set, eg :set wm=10 sets the wrap margin to 10 characters from 
+    the right side of the screen.
+
+*Issues*
+When I paste, it usually goes after the cursor but sometimes on the
+    next line. I need to understand why.
+    Okay, at first glance it looks like any time I do yy, p will place
+    on the next line but if I yank just part of a line, it will paste
+    to the right of the cursor.
+I need to learn how to deal with tabs and windows.
+I need to understand searching and replacing in Vi.
+I need to understand visual mode in order to really have cut-and-paste
+    ability in vi.
+Is there a way to get a line at 80'th column? I got used to being able to see
+    the limit before I got there in jedit, instead of having it hightlight
+    ex-post-de-facto.
