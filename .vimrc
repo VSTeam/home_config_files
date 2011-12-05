@@ -26,6 +26,7 @@ set titleold=""
 " do tabstop=4; if there are tabs in a file, they will still appear as 8 
 " spaces.
 set expandtab
+set softtabstop=4
 set shiftwidth=4
 
 " Always show 2 lines around what is being edited for context
