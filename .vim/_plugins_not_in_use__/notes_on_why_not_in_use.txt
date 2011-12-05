@@ -1,0 +1,10 @@
+minbufexpl seems handy, but
+  (a) I'm not sure it's worth the screen space it uses up, and
+  (b) I need to read the documentation before it does me any good.
+
+taglist is probably good, but I'm going to wait and make sure it isn't overriding
+the P paste command. And again, I need to read the manual anyway (I think what it
+does is give me a source code browser of some sort, and I might be able to do just
+as well with the (vim/exuberant ctags) enhancement of the (vi/ctags) toolbox.
+   So I'll probably wait till I've had time to finish skimming the vim for programmers
+part of LTVVE first.

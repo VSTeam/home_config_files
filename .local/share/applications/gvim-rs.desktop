@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GVim Text Editor (--remote-silent)
+Comment=Edit text files in a new buffer
+Exec=gvim --remote-silent %F
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/vim.svg
+Categories=Application;Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;
+NoDisplay=true
