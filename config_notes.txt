@@ -1,10 +1,11 @@
-.bashrc does three important things (it may do others):
+.bashrc does several important things (it may do others):
   (1) It sets my prompt. This is the PS1 business. Fernando considers
       the part about showing current branch to be uber-important.
   (2) It resets the up and down arrows to not just look thru old commands
       but to also consider what has been typed so far, and sets up git tab
       completion
   (3) It gives me colored ls as a default
+  (4) It creates aliases ... thus far gi, da, de
 .gitconfig 
    Mostly not that important I think. Much of it I don't understand.
    Probably the biggest thing it does is give all those aliases for commands

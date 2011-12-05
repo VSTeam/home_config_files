@@ -1,4 +1,10 @@
 ############################################################################
+# My aliases
+gi='gvim --remote-silent'
+de='cd devel'
+da='cd data'
+
+############################################################################
 # Static copy of git utilities, in case it's not on the system
 . $HOME/.bash_git_completion
 
