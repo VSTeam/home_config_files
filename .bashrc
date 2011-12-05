@@ -1,8 +1,47 @@
 ############################################################################
 # My aliases
-gi='gvim --remote-silent'
-de='cd devel'
-da='cd data'
+alias gi='gvim --remote-silent'
+alias de='cd devel'
+alias da='cd data'
+
+#### alias wrapping issues to make tab completion work ####
+
+# Wraps a completion function
+# make-completion-wrapper <actual completion function> <name of new func.>
+#                         <command name> <list supplied arguments>
+# eg.
+#   alias agi='apt-get install'
+#   make-completion-wrapper _apt_get _apt_get_install apt-get install
+# defines a function called _apt_get_install (that's $2) that will complete
+# the 'agi' alias. (complete -F _apt_get_install agi)
+#
+
+function make-completion-wrapper () {
+    local function_name="$2"
+    local arg_count=$(($#-3))
+    local comp_function_name="$1"
+    shift 2
+    local function="
+function $function_name {
+    ((COMP_CWORD+=$arg_count))
+    COMP_WORDS=( "$@" \${COMP_WORDS[@]:1} )
+    "$comp_function_name"
+    return 0
+}"
+    eval "$function"
+}
+
+# make a wrapper for my gi to have tab completion
+# using the completion function "_git"
+# make a wrapper for my gi to have tab completion
+#  how do I know what the name of the completion function is?
+#  do this:        `complete -p            |        vim`
+#           (list all completion functions)  (which ones involve vim?)
+#  and you find that the completion function used is _filedir_spec
+make-completion-wrapper _filedir_xspec _gi_compl gvim --remote-silent
+
+# we tell bash to actually use _git_checkout_mine to complete "gco"
+complete -o bashdefault -o default -o nospace -F _gi_compl gi
 
 ############################################################################
 # Static copy of git utilities, in case it's not on the system
