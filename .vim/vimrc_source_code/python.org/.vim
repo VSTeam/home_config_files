@@ -42,8 +42,8 @@ highlight BadWhitespace ctermbg=red guibg=red
 
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+""""" (removed) Make trailing whitespace be flagged as bad.
+""""" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters
 " Python: 79 
@@ -83,9 +83,10 @@ filetype plugin indent on
 " Keep indentation level from previous line: 
 set autoindent
 
-" Folding based on indentation: 
-set foldmethod=indent
-
+" Folding based on syntax: 
+set foldmethod=syntax
+set foldnestmax=3
+set foldlevelstart=3
 
 " ----------------------------------------------------------------------------
 " These are the only python.org-suggested options that I am leaving out for now.
