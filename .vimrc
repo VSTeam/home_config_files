@@ -12,10 +12,14 @@ set colorcolumn=80
 " gui window stuff
 if has("gui_running")
     set textwidth=80
-    set lines=55
-    set columns=80
+    set lines=999
+    set columns=270
     " enable use of mouse
     set mouse=a
+    set guifont=Monospace\ Regular\ 9.25
+    set equalalways
+    vertical new
+    vertical new
 endif
 
 " Set shell title to filename and path. Restore on exit.
