@@ -11,7 +11,7 @@ set colorcolumn=80
 
 " gui window stuff
 if has("gui_running")
-    set textwidth=79
+    set textwidth=80
     set lines=55
     set columns=80
     " enable use of mouse
