@@ -76,9 +76,9 @@ filetype plugin indent on
 set autoindent
 
 " Folding based on syntax: 
-set foldmethod=syntax
-set foldnestmax=3
-set foldlevelstart=3
+set foldmethod=indent
+" no auto-folding
+set nofoldenable
 
 " ----------------------------------------------------------------------------
 " These are the only python.org-suggested options that I am leaving out for now.
