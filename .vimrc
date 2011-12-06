@@ -6,6 +6,9 @@ set nocompatible
 " line numbers
 set nu
 
+" color column 80
+set colorcolumn=80
+
 " gui window stuff
 if has("gui_running")
     set textwidth=79

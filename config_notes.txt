@@ -5,7 +5,15 @@
       but to also consider what has been typed so far, and sets up git tab
       completion
   (3) It gives me colored ls as a default
-  (4) It creates aliases ... thus far gi, da, de
+  (4) It creates aliases ... thus far gi, da, de. The gi alias also
+      required including someone's completion function wrapping code.
+.local/share/applications/gvim-rc.desktop
+   This, along with some right-clicking and 'open with' in the GUI, is
+   needed to make clicking files in nautilus open them in an existing
+   gvim session.
+   It creates a new 'program', gvim (--remote-silent), that should be
+   available in the applications list when you do that right-clicking
+   business.
 .gitconfig 
    Mostly not that important I think. Much of it I don't understand.
    Probably the biggest thing it does is give all those aliases for commands
