@@ -37,14 +37,6 @@ endf
 au BufRead,BufNewFile *.c,*.h call Select_c_style()
 au BufRead,BufNewFile Makefile* set noexpandtab
 
-" (n) Use the below highlight group when displaying bad whitespace is desired.
-"""" highlight BadWhitespace ctermbg=red guibg=red
-
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" (n) Make trailing whitespace be flagged as bad.
-""""" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
 " Wrap text after a certain number of characters
 " Python: 79 
 " C: 79
