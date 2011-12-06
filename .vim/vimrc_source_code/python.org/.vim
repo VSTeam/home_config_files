@@ -67,7 +67,7 @@ au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 set encoding=utf-8
 
 " For full syntax highlighting:
-let python_highlight_all=1
+"""""" let python_highlight_all=1 ... this leads to whitespace highlighting
 syntax on
 
 " Automatically indent based on file type: 
