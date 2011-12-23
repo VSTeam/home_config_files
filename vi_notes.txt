@@ -1,3 +1,73 @@
+Basic buffer/tab/window management:
+  I constantly seem to need to review this stuff, so I am putting it
+  at the top for quick reference.
+** Buffers within a window **
+To list your open buffers, do :ls. To jump directly to a particular
+buffor, use :b # where the number is the number in the buffer list. You
+can also use the name of the buffer, but you have to give the full path
+which is a pain (there are apparently plugins to avoid this)
+  Within a window, you can use :bn and :bp 
+(for :bnext and :bprev) to move back and forth between
+buffers. You can use :bn # and :bp # to move more than one at a time.
+If vim is being a pain about moving, you need to :set hidden.
+  When opening a new buffer, if you aren't sure whether it is open,
+you should use :dr (for :drop) filename, which prevents you from getting two
+copies of a single file (that can happen if you use :e).
+  To close a buffer, it is best to use :bdelete. You can use :bwipeout,
+but that will dump some potentially useful data that you can use if you
+reopen that buffer.
+---
+I downloaded a package called bufkill, which emulates emacs behavior, so now 
+if I do :bd it should delete a buffer along with the window whereas :BD should
+delete the buffer without closing the window. Not only that, but there is also
+scrolling per window: :BB and :BF will scroll fwd/backward thru buffers last
+accessed in any given window. There is one level of undo in deleting buffers,
+although I'm not sure how to undo.
+---
+** Tabs **
+These are viewports, or collections of windows. You shouldn't use them as
+'buffer replacements', but you can use them effectively to group together
+collections of windows on related files. Sometimes you might want to
+use two tabs for one set of files, in which case you should stick the
+most commonly paired files in the same tab so that you have to switch tabs
+as rarely as possible.
+  You can use :tabr (tabrewind; it uses an rewind rather than first because
+tabf is a different command), :tabl and :tabn :tabp to switch tabs. In gvim,
+you can also use the mouse. You probably shouldn't be switching tabs too
+often, so that's not a big deal. You can also do :tabn #, :tabp #, and
+you can use :tabs :tabn # the same way you would use :ls :b #.
+  To open a tab, you can do :tabnew or if you want a specific file, :tabnew
+filename. To close a tab, you can use :q if you also want to close the file and
+there is only one window, or :tabc to close the tab without affecting
+the buffer list.
+   Someone suggested putting this in .vimrc to get tab commands to behave
+a bit more like window commands:
+map <C-t><up> :tabr<cr>
+map <C-t><down> :tabl<cr>
+map <C-t><left> :tabp<cr>
+map <C-t><right> :tabn<cr>
+I'll make a note if/when I add that to my .vimrc.
+** Windows **
+If you want to split the screen on a tab and open a file, you should do
+:vsplit or :split. If you just want to split, you can do the vi-mode
+C-w s or C-w v.
+  To navigate windows, do C-w (movement). You can also use C-w t and C-w b
+to go to the top-left/bottom-right windows on a tab. To close a window, do
+C-w c, and to close all other windows in a tab do C-w o.
+
+**Some basic tools I often forget**
+gc - if used in vi mode and followed by a movement, or if used in visual
+     mode with something highlighted, this formates the text. Very useful
+     if you are in latex; probably not such a big deal in python although
+     it might auto-reset your indentations for lines that go over. I'm not
+     sure about that.
+Opening files - This is best done using F2 (nerdtree), :Sex, or
+                :dr if you are willing to type the full filename.
+                The built-in :Sex is maybe a tiny bit more convenient than
+                NerdTree when you want another file in the current
+                directory or a neighboring one, but otherwise NerdTree
+                is probably nicer.
+
 ************************************************************************
 ******** I am at ch6, p. 117(pdf) or 95(book) in LtVVE, 7th ed *********
 ************************************************************************
@@ -275,6 +345,9 @@ I need to understand visual mode in order to really have cut-and-paste
 Is there a way to get a line at 80'th column? I got used to being able to see
     the limit before I got there in jedit, instead of having it hightlight
     ex-post-de-facto.
+
+z=   provides alternatives when doing spell checking. Handy in document.
+
 
 **********************************************************************
 ************************ Part II: ex commands ************************

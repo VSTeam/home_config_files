@@ -75,8 +75,9 @@ filetype plugin indent on
 " Keep indentation level from previous line: 
 set autoindent
 
-" Folding based on syntax: 
-set foldmethod=indent
+" Manual folding (see mappings.vim for commands to fold function,
+" docstrings)
+set foldmethod=manual
 " no auto-folding
 set nofoldenable
 

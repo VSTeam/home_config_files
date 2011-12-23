@@ -16,7 +16,7 @@ if has("gui_running")
     set columns=270
     " enable use of mouse
     set mouse=a
-    set guifont=Monospace\ Regular\ 9.25
+    set guifont=Monospace\ Regular\ 9.2
     set equalalways
     vertical new
     vertical new
@@ -41,7 +41,14 @@ set scrolloff=2
 
 " incsearch... hlsearch is default, but setting it doesn't hurt.
 set incsearch
-set hlsearch
+set nohlsearch
+
+" buffers can be invisible (not seen in an open window in any tab) but open.
+set hidden
+
+" tab completion in the ex command line will behave more like in bash
+set wildmenu
+set wildmode=longest:full
 
 " vimrc source code ----------------------------------------------------------
 
@@ -90,11 +97,11 @@ set hlsearch
 "     set file format to unix (affects newline encoding; \n only not \r\n)
 "   --
 "   for makefiles, specifically make sure noexpandtab and shiftwidth=8.
-source ~/.vim/vimrc_source_code/python.org/.vim
+source ~/.vim/vimrc_source_code/python.org.vim
 
 " abbreviations and mappings
-source ~/.vim/vimrc_source_code/abbreviations/.vim
-source ~/.vim/vimrc_source_code/mappings/.vim
+source ~/.vim/vimrc_source_code/abbreviations.vim
+source ~/.vim/vimrc_source_code/mappings.vim
 
 " plugin-related code ---------------------------------------------------------
 
