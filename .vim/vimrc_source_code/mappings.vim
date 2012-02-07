@@ -11,11 +11,15 @@
 " set.
 map  :set nowrapscan?defjmf/defkzf'f:set wrapscan
 map  :set nowrapscan?"""mf/"""zf'f:set wrapscan
-map  Ofrom IPython import embed; embed()
+map  Ofrom IPython import embed; embed()
+" clipboard cut and paste: can only paste above, unfortunately.
+" samething like C-y y should still work correctly, I hope
+map  "+P
+map  "+y
 
 " *** INSERT MODE ***
 
 " `C-p c` in insert mode will execute the :pc (preview close) command.
 " This makes omnicompletion more useful. Not sure if it will help with
 " ctags and such.
-imap c :pca
+imap c :pca

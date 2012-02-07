@@ -1,3 +1,8 @@
+Random cool stuff I found
+shift + 3 (#) in vi mode will search backward (with wraparound) to the prev
+instance of the word you are on.
+
+
 Basic buffer/tab/window management:
   I constantly seem to need to review this stuff, so I am putting it
   at the top for quick reference.
