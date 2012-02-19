@@ -3,6 +3,7 @@
 alias gi='gvim --remote-silent'
 alias de='cd devel'
 alias da='cd data'
+alias vim='/Applications/MacVim-ppc-i386-10_5-7_3-53/MacVim.app/Contents/MacOS/Vim'
 alias cython='python setup.py build_ext --inplace'
 #### alias wrapping issues to make tab completion work ####
 
