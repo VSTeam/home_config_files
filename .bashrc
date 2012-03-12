@@ -3,7 +3,7 @@
 alias gi='gvim --remote-silent'
 alias de='cd devel'
 alias da='cd data'
-alias cython='python setup.py build_ext --inplace'
+alias quickcython='python setup.py build_ext --inplace'
 #### alias wrapping issues to make tab completion work ####
 
 # Wraps a completion function
