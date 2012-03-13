@@ -11,15 +11,14 @@ set colorcolumn=80
 
 " gui window stuff
 if has("gui_running")
+    winpos 1600 0
     set textwidth=80
     set lines=999
-    set columns=270
+    set columns=180
     " enable use of mouse
     set mouse=a
-    set guifont=Monospace\ Regular\ 9.2
+    set guifont=Monospace\ Regular\ 7.2
     set equalalways
-    vertical new
-    vertical new
 endif
 
 " Set shell title to filename and path. Restore on exit.
@@ -41,7 +40,7 @@ set scrolloff=2
 
 " incsearch... hlsearch is default, but setting it doesn't hurt.
 set incsearch
-set nohlsearch
+set hlsearch
 
 " buffers can be invisible (not seen in an open window in any tab) but open.
 set hidden

@@ -1,7 +1,9 @@
 Random cool stuff I found
 shift + 3 (#) in vi mode will search backward (with wraparound) to the prev
 instance of the word you are on.
-
+If hls is set, then the search results stay highlighted til the next search,
+which I think is annoying in most contexts. But you can quickly unhighlight
+them with :noh.
 
 Basic buffer/tab/window management:
   I constantly seem to need to review this stuff, so I am putting it
