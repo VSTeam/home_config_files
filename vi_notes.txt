@@ -4,6 +4,11 @@ instance of the word you are on.
 If hls is set, then the search results stay highlighted til the next search,
 which I think is annoying in most contexts. But you can quickly unhighlight
 them with :noh.
+The omni-completion C-x C-o is often useful (C-x C-i and C-x C-l are also nice)
+for finishing a name, but the fantastic thing about it is that even if I know
+the function, if I just want an arguments list then I can type it instead of
+opening a parentheses. The only failure is that it won't work on methods
+because vim doesn't know what class various objects are.
 
 Basic buffer/tab/window management:
   I constantly seem to need to review this stuff, so I am putting it
