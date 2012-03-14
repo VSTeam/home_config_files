@@ -1,3 +1,15 @@
+Appearance:
+I changed the font to 7 for now because it lets me use the tall monitor.
+To balance that, I did :set linespace=2 which moves lines a part a bit.
+Also to balance that, I started playing with easier-on-the-eyes colors.
+    My favorites are:
+        If I need a light background to wake up: peach
+        Non-black alternatives: desert, slate, darkblue
+        Black background: murphy(green), ron (light blue), 
+                          pablo and torte (both traditional/white)
+
+
+
 Random cool stuff I found
 shift + 3 (#) in vi mode will search backward (with wraparound) to the prev
 instance of the word you are on.
