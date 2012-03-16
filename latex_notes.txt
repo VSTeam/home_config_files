@@ -1,0 +1,27 @@
+These are just some quick notes on ideas I ran across browsing the web:
+
+1. In latex, use the `\declare`s and such at the beginning to encapsulate 
+ideas, rather than to save typing. Use editor macros for typing, if
+you can.
+
+2. Start each new sentence on a new line. It makes git control nicer,
+and also makes the text a lot more readable.
+
+3. Apparently people think eqnarray should be avoided. I liked it, but
+I guess you can make align look good (my experience was that align looked
+horrible because it didn't auto-shift the = horizontally, but the 'avoid
+eqnarray' advice seems fairly standard.
+
+4.
+Read the post by Alok here:
+http://stackoverflow.com/questions/193298/best-practices-in-latex
+  the posts by dreeves
+
+5.
+Makefiles are highly recommended to avoid the two-cycle-plus-bibtex
+type annoyance. Here's one possible source
+http://www.acoustics.hut.fi/u/mairas/UltimateLatexMakefile/
+
+6.
+Keep in mind other tools like Sweave (for R) and Lyx. There may be a python
+version of Sweave in the works eventually.
