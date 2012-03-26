@@ -19,6 +19,7 @@ if has("gui_running")
     set mouse=a
     set guifont=Monospace\ Regular\ 7.2
     set equalalways
+    colorscheme slate
 endif
 
 " Set shell title to filename and path. Restore on exit.

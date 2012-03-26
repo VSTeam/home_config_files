@@ -5,10 +5,43 @@ Also to balance that, I started playing with easier-on-the-eyes colors.
     My favorites are:
         If I need a light background to wake up: peach
         Non-black alternatives: desert, slate, darkblue
-        Black background: murphy(green), ron (light blue), 
-                          pablo and torte (both traditional/white)
+        Black background: murphy(green), pablo (white)
+    ...
+    Of these, I think slate is probably the best, because it washes out
+    comments (of course, then they are hard to read, but the code as a
+    whole becomes more readable). Darkblue also washes out comments,
+    and I always like blue. My favorites are probably desert and murphy.
+    Pablo I include mostly because it has a 'classic' look, with the
+    black background and mostly white text.
+
+If you want the best python completion, you should apparently try
+:set completefunc? (while editing a .py, of course) to see if there is 
+one. If not, you can do :set completefunc=pythoncomplete#Complete.
+...
+I'm not sure if this actually improved my completion any, so for now I
+am not adding it to my .vimrc.
+...
+Also, cool tip (relates to issues I mention below): vim won't autocomplete
+methods of objects using C-x C-o (it will if you already used that method,
+e.g. C-x C-i)... HOWEVER, if you really want to look at methods and are
+willing to type a bit to avoid having to open a terminal and go into 
+ipython, then you can actually get these by typing the class name,
+then a dot, then however much of the function you want and then doing
+C-x C-o.
+
+The zt zz zb commands are pretty useful. I keep grabbing the scrollbar
+or moving my cursor around in situations where I could much more efficiently
+use these: they move the screen (*not* the cursor) so that the current
+cursor position is in the top/middle/bottom of the screen
+... not to be confused with folding, the other major 'z' command class,
+    or with ZZ which is the same as :x or :wq.
 
 
+Vim also has an easy alternative to C-x C-i that apparently does similar
+stuff: C-n and C-p seem to look for the next and previous words in the
+workspace, or some such. I'm not sure how it works exactly, but it would
+be faster and hence I would more likely use it a lot, therefore saving
+typos and time.
 
 Random cool stuff I found
 shift + 3 (#) in vi mode will search backward (with wraparound) to the prev
@@ -21,6 +54,48 @@ for finishing a name, but the fantastic thing about it is that even if I know
 the function, if I just want an arguments list then I can type it instead of
 opening a parentheses. The only failure is that it won't work on methods
 because vim doesn't know what class various objects are.
+...
+To work in a shell, do :sh and then C-v. Not sure how often this would be useful,
+but I could see it being one way to avoid using a fuzzyfinder: you could do 
+whatever find command in bash, and then call gi on that file to open it in the
+current instance of vim.
+...
+DO NOT FORGET THE VERY USEFUL %
+Also, learn about delimited blocks (maybe)
+Also, don't forget marks. Also useful.
+...
+In insert mode, C-t and C-d indent and unindent. Note that this frees tab for
+other things, which is how a lot of folks have mapped tab to C-x C-o.
+
+The * and # are like / and ? on the *exact* word under the cursor.
+You can use g* and g# if you like for the inexact word.
+
+Using word delimiters in searches in general could cut down a lot on
+false positives...
+
+gf - go to file: work on imports in C/C++ as well as python.
+    *BUT* you need to do :cd to the right root directory (it won't find
+    things as dynamically as one might hope, in python it pretty much
+    just replaces . with / and tries to open.
+
+
+### Ctags:
+
+here's the code used in the google tech talk:
+:!ctags -R .
+:tag init
+:tnext
+----
+:grep "\<K_HOME\>" **/*.h      ... I think K_HOME is what he's looking for here
+:cnext
+.... I don't quite follow it and I think at least part of it is specific to C 
+code (the second option is a search of header files, I think; I'm not sure
+how * differs from ** but maybe ** handles /'s(?) ) but the idea once I know
+it is probably good.
+
+
+
+################################
 
 Basic buffer/tab/window management:
   I constantly seem to need to review this stuff, so I am putting it
@@ -116,262 +191,6 @@ vi -r
 vi file1 file2 ...
     Opens vi on multiple files.
 
-*Basic file commands*
-:sh will take you to a shell, then C-d will get you back to vim when done.
-    Doing !`command` lets you send just one command to the shell instead.
-:w, :q, :x (better than :wq), :q! are very standard.
-    If you want to write to a new file name, do :w `filename`.
-    If you need to overwrite an existing file, do :w! `filename`.
-In normal mode, ZZ (have to capitalize!) will do same as :wq.
-    But :x is probably better because it doesn't overwrite the file unless
-    you made modifications, which can lead to better behavior from makefiles
-    if you have a large compiled codebase. Plus it's just as easy to hit, and
-    will get me out of the habit of doing :wq all the time, which has led
-    me to accidentally quit a lot when I'm just trying to save a file.
-:e `filename` to open a file from ex mode. :e! reopens the current file.
-
-*Movement*
-k,j,l,h for movement, which is great for left and right.
-    For up and down, I would just use arrows or alternative commands,
-    because j and k are not all that great, ergonomically speaking.
-    Plus, they are on my left and I'd prefer to abuse my right :)
-It is true in general, but I want to emphasize in the context of movement,
-    the importance of numeric arguments. 10l will move 10 to the right,
-    etc. They aren't so useful for k,j,l,h because usually you don't want
-    to count, and obviously not for 0, g_, etc, but they are great for
-    things like `5b` or `2W,` and especially when you are using movement
-    in conjunction with change/delete commands, because then you need to
-    get the movement in all at once (when you are just moving and nothing
-    else, it's okay to just keep hitting `w`, but not so much for yanking).
-0, ^, and g_, $ for beginning, non-wtspc beginning, non-ws end, end of line.
-    It is worth pointing out that g is awkward. gg_ goes to the end of line,
-    but gg does to the top and gE, ge make e and E go backward, so the
-    directions are opposite. It messes up the usual nice relationship of
-    motion commands in vi... think of g as an 'irregular verb' (haha)
-C-b, C-f, C-u and C-d scroll up and down a full and half screen, respectively.
-    pgup and pgdwn work fine for C-b and C-f, so they aren't really needed.
-    Buc C-u and C-d are probably better since you can keep a lot of context.
-C-e and C-y are similar, scroll forward and backward one line. The difference
-    relative to k and j is that your view moves with the cursor.
-b, w, B, W to go back and forth a word 
-    (B and W include punctuation and whitespace in the idea of 'word'
-`number` + G will go to a line number.
-    Note that this is an exception of the rule that `n` + `command`
-        repeats `command` `n` times.
-    gg and G go to the top and bottom of the file.
-- and + take you to the last/first character of the prev/next line.
-e takes your cursor to the end of a word. If you are in the middle
-    of a word, it takes you to the end of that word; if at the end,
-    it takes you to the end of the next word.
-    E does the same thing, treating punctuation as part of a
-    word.
-    Note that 8e and 8w do almost the same thing; the only difference
-    is that 8w takes you a bit farther to the start of the next word.
-g is an oddball movement modifier (aside from just gg = go to start of file):
-    gE is like E but backward, and ge like e but backward.
-    g_ goes to last non-blank char of line ($ goes to absolute last)
-% will go to matching {parenth, brackets, braces}
-[ and ] will go to surrounding brackets and braces, eg if you are
-    on the word "foo" in "[(, {, foo, ), }]" then you can use [[
-    and ]] to go to the opening and closing brackets, [( and ])
-    for opening and closing parentheses, etc.
-    If you have multiple nestings, you can use 2]) and other such
-    to go to outer layers.
-z is a scroller (but not movement... the cursor stays where it is):
-    z-return will scroll down until the current line is at the top
-    z-. will center the screen on the current line
-    z-- (zee minus) will scroll up till the current line is at bottom
-H, M, L, nH, and nL are the opposite of z and C-u, C-d in a sense:
-    they move the cursor but don't change the view at all.
-    H moves the cursor as high as possible without redwawing, ie the top
-    6H moves the cursor 6 lines below the top
-    M moves the cursor to the middle
-    3L moves the cursor 3 lines above the lowest it can go, the bottom
-    L moves the cursor to the lowest it can go.
-n|, eg 5|, moves the cursor to column 5 of the current row.
-(, ), {, } move the cursor to the beginning of the current/next
-    sentence/paragraph respectively.
-    I can't remember what this means in the context of code... I think
-    most vim packages recognize functions as paragraphs, but I'm not sure
-    what a sentence is.
-
-*Movement by searches*
-f, F, t, T: stand for 'find' and 'to'. These are current line searches,
-    useful mostly for quick navigation within a line. They only look for
-    characters, not words.
-      fx and Fx will put the cursor on top of the next/previous 'x' in the
-    line, while tx will move to the character *before* next x and Tx to the
-    character *after* prev x.
-  ; will repeat the previous find command
-  , will repeat it in the opposite direction.
-/ and ?: forward and backward searches. Typing either of these will drop you
-    into the command line, where you type the text (which can't have a
-    return character), and then enter will bring you back up to the file
-    you are editing and search.
-        The last search you made stays available until you search again. So,
-    at any time, you can use `n` ('next') to repeat the search in the same
-    direction, or `N` to reverse the direction. Alternatively, you can do
-    `\-enter` or `?-enter`, in which case you don't have to remember the
-    direction of the prev search.
-        Note that if you are at a function call, and you use search to find
-    the function, one way of getting back to the call afterward would be to
-    repeat the search in the opposite direction.
-
-*Insertion*
-Use o and O for inserting lines.
-Use i, I, a, A for basic in-line, start and end of line.
-Remember that c, cc, and C can also be very useful ways to get to insert mode.
-Also, J can help you avoid needing insert mode in some situations.
-
-*Deletion and changing*
-x is like backspace (within a line), X like forward delete.
-d + `motion command` deletes. 
-    dd deletes the line, D deletes from cursor to end of line.
-r + `character` will replace any one character without leaving normal mode.
-s will delete the character under the cursor and go to insert
-    S will delete the line and go to insert. It keeps leading whitespace.
-c + `motion` will delete whatever d + `motion` would have, and go to insert.
-    C is like c + $ (like D is d + $)
-    cc will delete the whole line and go to insert *but*, unlike S, it
-        will leave whitespace (so it's like S but you stay tabbed over).
-J is important. It joins two lines, which is a tricky thing to do otherwise.
-    More specifically, it erases the newline at the end of the line you are
-    on, regardless of where you are. 2J will delete the next two newlines.
-
-*Assorted useful commands*
-u undoes the last action, and U undoes all changes to the current line
-    (back to whenever you were last on a different line).
-C-R redoes the last undo. One of my old plugins was overriding this, which
-    I need to fix if I'm going to use that plugin again. 
-. repeats the previous command, whatever it was.
-~ toggles the case of a character and moves you one character over
-    (so you can use, eg, 7~ to toggle a word, but I'm not sure how you
-    just switch the current word's case...that's a different command.)
-It is worth pointing out specifically that :r !unixcommand can be useful. It
-    reads the output of the command to your file. Unfortunately it appends
-    rather than sticking it where your cursor is (there may or may not be
-    a workaround, certainly you could program a macro to grab the inserted
-    stuff and move it to the cursor if you really wanted). For example,
-    :r !date could occasionally be handy, and I can imagine that if I started
-    having a deeper file tree in /data, navigating to the dicrectory and using
-    :r !pwd repeatedly could save me a bit of typing.
-    You can also do things like :r !sort somefile, etc, or even do
-    :r !ls *somefragment* in order to make sure you get a filename correct
-    when the only thing you are sure of is a fragment of the name.
-You can also use system commands with ex calls to modify groups of lines;
-    for example, :%!sort will sort all the lines in the current buffer.
-    It is possible to do the same thing from vi mode, see p 123 of the pdf,
-    but the rules are confusing so I think sticking to ex mode is a good idea.
-
-
-*Cut, copy, and paste - type commands in vi*
-In vi, 'copy' is called yank and is not the same as clipboard copy
-    and 'paste' is called put and is not the same as clipboard paste.
-y + `movement` = yank
-    yy and Y both yank the current line (including whitespace).
-        Note that this is a failure of the UI to be consistent, since
-        commands like D and C affect to the end of the line.
-d + `movement`, or any other deletion, yanks when it deletes and therefore
-    is sort of like 'cutting'. When I say 'any other deletion' that is a
-    bit simplistic. For instance `x` and `c` lead to the deleted characters
-    being put in the `yank ring` (that's a vi-ified emacs term but whatever)
-    but `r` does not.
-p will put whatever is the last item in the yank ring, *after* the cursor.
-    This is slightly oversimplified: p puts after the cursor if you delete
-    or yank text using a movement command (even one that crosses from one line
-    to the next, like d100w). It puts on the *line below*, however, if
-    you delete or yank entire lines using dd, yy, cc.
-    Supposedly, P will do the same thing, *before* the cursor. But I
-    have found that it opens a side panel. I'm not sure why; maybe there
-    is something odd in my .vimrc file, but I thought I got rid of
-    everything unexpected. I'm also not sure what the side panel is
-    supposed to be used for.
-
-*Marks*
-You can mark any point in the file with any letter (I'll use x as generic).
-    Unfortunately, each buffer has its own dictionary of marks, so you cannot
-    use marks to switch buffers (there may be a plugin for this, but it's
-    probably not worth the effort). 
-mx: marks the current spot, naming the mark `x`.
-'x: moves to start of the line containing mark `x`
-`x (here I mean the backtick literally haha): to the character marked by `x`.
-`` (two backticks in a row): moves to the last mark
-'': returns to start of line of last mark (note the consistency of ` vs ')
-    NOTE: it's cool how vi uses " (register) '(marked line), `(marked char)
-    to refer to various dictionaries referencing user-set workspace objects.
-    So in general, any quote character references some user-set object.
-
-*Registers and Clipboard usage in vim*
-Below I discuss registers. These are important for understanding default
-    cut and paste. But there bigger importance is in understanding how
-    to do multiple cut-and-pastes intentionally (eg you could copy several
-    times from one file to named registers and then paste each block to
-    a new spot in a different file, only having to switch files once),
-    how to recover old deletions (the numbered registers), and how to
-    interact with the system clipboard (the + and * registers).
---One last note in general: often registers are called buffers. I try to
---reserve this term for files that are open, but I'm guessing that the source
---code treats these essentially the same.
---LtVE calls registers buffers for sure.
- There is a default register, and the notes above indicate
- its use (so you can cut or copy to the register using d or c or y,
- and paste from it using p). Every copy/cut overwrites this register;
-   If you want to recover an older yank or delete or change, then you
- need to use the default numbered registers. They are named just like
- other registers (see below) except using numbers rather than letters
- or symbols. So the default register is "1, and if you yank again, the
- text that used to be in "1 will now be in "2, and so on. To paste
- the text in the yank ring from 5 yanks/deletes ago, do `"5p`.
-   Note that although it's a small pain, you can nonetheless easily
- enough hunt for an old yank/deletion if you have to by just pasting
- and then hitting `u` until you find the right block of text.
-   We also can use our own named registers. If you know you want to
- cut some text to paste, but you want to be able to wait a bit before
- pasting it, you can cut/copy into registers. E.g. we could put 3 blocks
- of code into registers "a, "b, and "c by typing `"ayy"` `"bd4b`, and
- `"cC`, and then paste them, in any order we desire and possibly after
- doing other cuts and pastes from the clipboard or the default registers,
- using `"ap`, `"bp`, and `"cp`.
-    The symbols `*` and `+` can both be used to refer to the system
- clipboard. This is the only way to cut from vi to the system without
- using the mouse (you can always highlight and use the right click menue,
- but that can be annoying), and also the only way to paste to vi from
- the system without using the mouse. It works in the terminal and in
- gvim, although the option is less important in gvim since you could use
- the buttons up top in a pinch.
-   So, for example, you can say `"*yy` to copy a line, and
- `"+p` to paste. Of course, if you are already using a mouse anyway
- you can also do the middle-click that generally works in Ubuntu.
-   --
- I don't yet know what commands apply, but you can do "x `command` to perform
- a command on buffer x. I tested it with ~ as the command and it did not
- seem to work, so the only ones I can say for sure work are P and p 
- (and even then P does not work for me right now because one of my plugins
- is interfering).
-
-*Setting options* - see ch7 of LVE -
-This is getting into customization; if you want it permanent you can put it in
-    your .vimrc file, otherwise you can do it once.
-Options are vi variables that set editing parameters. To set them, you use the
-    ex command set, eg :set wm=10 sets the wrap margin to 10 characters from 
-    the right side of the screen.
-
-*Issues*
-When I paste, it usually goes after the cursor but sometimes on the
-    next line. I need to understand why.
-    Okay, at first glance it looks like any time I do yy, p will place
-    on the next line but if I yank just part of a line, it will paste
-    to the right of the cursor.
-I need to learn how to deal with tabs and windows.
-I need to understand searching and replacing in Vi.
-I need to understand visual mode in order to really have cut-and-paste
-    ability in vi.
-Is there a way to get a line at 80'th column? I got used to being able to see
-    the limit before I got there in jedit, instead of having it hightlight
-    ex-post-de-facto.
-
-z=   provides alternatives when doing spell checking. Handy in document.
-
 
 **********************************************************************
 ************************ Part II: ex commands ************************
@@ -385,185 +204,6 @@ z=   provides alternatives when doing spell checking. Handy in document.
     If you want to write to a new file name, do :w `filename`.
     If you need to overwrite an existing file, do :w! `filename`.
 :e `filename` to open a file from ex mode. :e! reopens the current file.
-
-*Basic line editing commands*
-    ------In what follows, I sometimes use spaces for clarity ------
-             ---but they are not needed in practice----
-    ------In what follows, n,m, and k are integers-------
-:n, :n,m -- if you are actually in ex (which rarely happens, I mention it here
-    mostly because it helps drive other syntax) these will print either line
-    n or lines m thru n.
-      Other commands are often preceded by one or two numbers in this way,
-    and that means the commands apply to that line or those lines. Any
-    command not preceded by such a number is either assumed to apply to
-    the line you are on or is a global command, such as those above.
-The folliwing commands can all be used in conjunction with
-one or more line numbers; otherwise, they apply to the current line:
-    :d (short for :delete, if used on current line equiv to vi's dd)
-    :co (short for :copy; :t also works... evuiv to vi's yy on 1 line)
-    SUBSTITUTE, VERY IMPORTANT
-    :s/target/replacement - substitutes target for replacement, 1st
-        occurance.
-    :s/target/replacement/g - globally substitutes, ie every case on
-        current line... and :#,#s/target/replacement/g will do the same
-        thing on any block of lines, which is cool. 
-    :s/target/replacement/gc - substitute but confirm each one first.
-        Then, use y and n for each case, and use q to exit the search
-        This is all you need for basic search-and-replace in vi.
-        There are more options, and regular expressions and such, but I'll
-        discuss that later.
-     MORE ON COPYING (AND MOVING)
-     `:n,m co` will copy lines n thru m to the default buffer. But if you
-        already know where you want to paste, you can do:
-     `:n,m co k` which will copy the same lines, and paste them *below* line
-           k.
-           Note that in this context, the shortcut :t = :co makes more sense,
-           the 't' stands for 'to' as in 'copy this to here'...
-     `:n_1,n_2 m k` is basically the same thing except it moves, so it's like
-        cutting lines n_1 thru n_2 and pasting them below k.
-Now, the line numbers `n,m` can be replaced with shortcut symbols. 
-  Obviously, if you want to alter the current line it's best to just 
-   omit. But if the current line is the start or end of a range, you can use 
-   `.` rather than writing out the line number. 
-  Similarly, you can use `$` for the last line of the file. There's no 
-    shortcut for the first line, because you might as well just use 1. 
-  The symbol % by itself is a shortcut for 1,$ (the entire file).
-  The last number in the :co and :m commands can also be a shortcut, which 
-    makes copying and pasting to the end of file easy -- `:n,m co $`.
-  You can use +(number) and -(number) to give relative lines, compared to
-    the current position eg if you are on line 15 the :-5,+3co copies 10 
-    thru 18.
-  If you want the first number to be absolute and the second number relative
-    to it (rather than your current position), you can use + but replace the
-    comma with a semicolon, eg if you are on any line, :100;+5 copies lines
-    100 thru 105.
-  You can use a regular expression search in place of a line. We haven't
-    covered regular expressions, but if you are on line 20, and the next
-    instance of 'foo' is on line 23, then :/foo/;+2s/init/__init__/g
-    will globally replace all 'init' instances with '__init__' on lines
-    23 thru 25.
-  When working on text, 0 is not a valid identifier. But as a target for
-    a copy or a move command, it is and it results in pasting to the top
-    of the file.
-  ---
-Some basic ex commands I think are unnecessary but I want to mention in case:
-  ---
-  the = command prints line numbers. Useful if you need them, but it's
-    probably best to just use `:set nu` and `:set nonu` to deal with that.
-    See page 81 of the LTVVE pdf (p 59 of the book).
-  the g command (very useful as a modifier for s) will by itself perform
-    a global search. The results depend on the context. `:g/pattern` by
-    itself goes to the last instance (so in a sense the opposite of `/pattern`
-    in vi mode), and `:g!/pattern/nu` will display all the line numbers
-    for lines that *don't contain 'pattern'.
-   The `|` symbol lets you separate ex commands and put them on one line.
-    They execute in order, which could lead to funky results if you change
-    the number of lines, so I don't recommend using it.
-  ---
-Some other useful ex stuff
-  ---
-:XXXw newfile, where XXX is some line symbol combo e.g. `%` or `.,/pattern/` or
-               `2,15`, will write a piece of the buffer on which you are 
-               working to a new file.
-:XXX w >> otherfile   does the same thing, grabbing part of your buffer,
-                      but instead appends it to otherfile.
-:r filename   will read the file and paste it into your buffer, starting on
-              the line *below* the cursor.
-
-*Multiple Tabs, one window*
-If you want to always see which files are open, you need minbufExplorer.
-    It looks like there may be a small disadvantage to having it, because
-    it may hide the path to the files to save space. Not sure about that.
-If you want to be able to easily open multiple files in vi when you don't
-    have the path names down pat, NerdTreePlugin is useful.
-Once you have multiple tabs, use :n ande :N to move forward and back thru
-    your tabs.
-It appears (as far as I can tell) that unlike emacs, vi doesn't like to let
-    you switch tabs without saving first. This seems annoying... I should
-    poke around online and see if I can find a fix. I might just get used
-    to it though. I would assum that vim's windows might be more flexible...
-:args will let you see the open buffers, and your active one, which is impt
-    if you don't use minBufExplorer (and I'm thinking that for several
-    reasons, including wasted real estate, it might be dumb to use it).
-:e newfile will open a new file in a new tab. It also lets you switch buffers
-    by name (as opposed to cycling thru with :n and :N). So if you have a lot
-    of open files, the fastest way to switch is:
-       :w   then   :args    then    :e   filename.
-    Note that since vi forces you to save, in some sense you are really
-    editing one file at a time here.
-      Unfortunately, after typing :e, tab completion works as though you were
-    opening a new file in the same directory, so in many cases tab completion
-    won't be super useful.
-When using e to change files, you can use the symbols % and #, which just
-    stand for whatever the current file's name is and whatever the last viewed
-    file's name is. (Note that this use of % is consistent with statements like
-    %s/pattern/).
-You can actually aviod Ex altogether when switching between two files, because
-    Ctl-6 is the same as :e#, and a bit shorter to type. Again, you have to 
-    have saved (or abandoned) changes to % before you can use this command.
-Editing between files is a tiny bit annoying, because you have to save
-    whatever file you are editing in order to flip to another file. But
-    other than that, it works as expected; if you are editing foo1 and have
-    foo2 open, then you can do this to copy lines 70-80 of foo2 into foo1:
-        :w    Ctl-6    G70   yG80  Ctl-6   G   p
-
-*Global Replacement*
-  - We already discussed a lot of this above, but here we go into detail on
-  - the :s ex command, and how it can be used with options and regular
-  - expressions
-Basic syntax and options...
-    :s/pattern/new --- this replaces the first in-line 'pattern' with 'new'
-    :Xs/pattern/new --- replaces the first 'pattern' with 'new' in the
-                        line range specified by X (%, .,$, or 3,5 for exmpl)
-    :Xs/pattern/new/g --- replaces all occurances. Might be accident-prone.
-    :Xs/pattern/new/c --- only 1st occurance, asks to confirm first. Probably
-                          not all that useful.
-    :Xs/pattern/new/gc --- global but with confirmation
-                           ...use y and n to confirm
-                           ...it highlights ahead of time, so you can see if
-                              only the replacements you want are highlighted.
-                              If so, use a to replace all and exit the S&R.
-                           ...use q to get out of the search when you are
-                              finished.
-    :Xg/filter/s/oldpat/newpat/gc --- This illustrates how g can be used as
-                                      a modifier in front of s (recall my
-                                      simple g/pattern/nu example before, in
-                                      which g plays the same role): it finds
-                                      every line (in the range X, or if X is
-                                      blank then in the full buffer) containing
-                                      'filter', and then on those lines only
-                                      replaces 'oldpat' with 'newpat'.
-                            ...in case it isn't clear how useful this can be,
-                               imagine you want several search-and-replaces
-                               at onece, e.g. replace 'bidcount' and 'askcount'
-                               with 'bidvol' and 'askvol', but you can't just
-                               replace 'count' with 'vol' because of other
-                               terms appearing. Then you might be able to
-                               replace 'count' with 'vol', say, filtering
-                               on a regular expression '[dk]count', and get
-                               a reasonable set of choices.
-    :s --- this always repeats the previous substitution. It is one way of
-           getting :s/old/new/gc type behavior without having to do everything
-           at once (for example if you want to pause and change surrounding
-           code near each substitution).
-    p 102(pdf) or 80 (book) of LTVVE has some other tricks in command usage,
-    but most of them seem to obscure to matter.
-Vi command only search-and-replace:
-   We can actually avoid using ex for S&R and use vi instead as an alternative
-   to global replace: first, do a forward or backward search (one big reason
-   to have this in your toolkit is because it can do backward) using
-   /pattern or ?pattern. Then, enter insert mode (either by using c to delete
-   or by actually going into insert mode), and make your change. Then,
-   you can use n (and N if you want the opposite direction) to repeat the
-   search. Whenever you want to make a change, press . to repeat the insert
-   command (remember, search is a motion and hence . will not save it... `.`
-   only saves deletions, copies, pastes, insertions, and such), and press
-   n to move on. Whenever you don't want to make the change, just press
-   n.
-   Again, a big advantage of this approach relative to :s is that you can go
-   backward.
-Emacs-style incremental searches are not possible in Vi as far as I know.
-    But, vim will highlight the first result. So it gets you partway there.
 
 
 *Regular Expressions*
@@ -638,145 +278,6 @@ and also examples of how to use various commands and options to get desired
 behavior. It is probably worth rereading periodically at least until I am
 happy with my ability to do search-and-replace without wasting time.
 
-*Abbreviations and maps*
-Aside from various :set variable commands (which don't need to be preceded
-    by a colon in .vimrc) abbreviations and maps and such are probably the
-    most important 'basic' customizations you would want to make in
-    .vimrc, where by 'basic' I mean they don't require hooking up to a plugin
-    of some sort.
-Abbreviations are useful. The ex command :ab abbrev fulltext will map
-    an abbreviation to a bunch of text; it only works when the abbreviatin
-    is a full word, which is probably good but limits it's flexibility.
-    To kill the abbreviation when you no longer need it, just type
-    :unabr abbrev.
-    Note: in vim, abbrev can appear inside fulltext and the system won't
-    enter an infinite loop, but in some other versions either an infinite
-    loop occurs, or you'll get a single extra expansion, or the program
-    won't allow it.
-:map has essentially the same syntax and use as :ab, and you use :unmap
-    like :unabr. The difference is that it expands abbreviations for
-    vi (normal mode) commands.
-      The letters g, K, and q are apparently reserved for mapping, along
-      with Ctl-a, ctl-k, ctl-o, ctl-w, ctl-x, _, *, /, and =.
-      In normal vi v and V are reserved, but in vim these (and ctl-V) take
-      you to visual mode.
-    You may need to use ctl-v inside ex mode, when defining the command,
-    as part of your sequence of keystrokes, in order to escape certain
-    keys like ENTER, DELETE, and ESC (you need ESC if your macro includes
-    insertion!) that would otherwise take you out of ex mode before you had
-    a chance to finish the :map or :abbr command definition. For this, just
-    pause in your macro before hitting the special character, and type ctl-v
-    first to tell ex that it should treat the character literally.
-  Note that map always creates vi commands, so they have to be one letter
-    and there's a bit of a shortage of user-reserved letters. But the command
-    you make is perfectly allowed to include stuff done in ex mode (just
-    include a : in the command) or in insert mode, so it can make reasonably
-    complex things happen.
-It is worth emphasizing that :ab is much simpler than :map and is a great idea,
-    but :map is much more powerful: it allows you to do things like inserting
-    text from command mode and going back to command mode (so I could insert
-    a newline without leaving command mode, which has been annoying me,
-    or create sensible tab/untab macros... tho' they won't work in insert
-    mode, but that's probably good because it will force me to get used
-    to not staying in insert... and such), or insert text and then move to
-    somewhere in the insertion and stay in insert mode (useful if I made
-    an image macro in latex).
-Also, you can map over existing commands (ie you don't have to stick to
-    the user-reserved commands) as long as you are pretty sure you won't need
-    them. Many commands, for instance, are doubled (like ctl-j, which is
-    the same as j) or are not useful to me (like j itself and k, since I'd
-    prefer to use arrows for up and down).
-In fact, it actually is possible to use :map in insert mode. If you say
-    :map! keystroke command, then vi will map that keystroke in insert
-    mode to automatically leave insert mode and run whatever command sequence
-    you have (which needs to end with something like A or i if you want to
-    wind up back in insert). 
-      You can do this with any key you want, but since I use every character
-    in the acii keyboard, it is probably only appropriate with the function
-    keys (which are great except that I can't touch-type them) and---if it
-    works, I'm not sure---ctl and alt combinations.
-      To map a function key (using :map or :map!) use #1, #2, etc.
-It looks like :cabbr gives more-or-less the same behavior in ex mode,
-    as opposed to vi mode and insert mode.
-:map and :ab by themselves (without any parameters) will list all the
-    current abbreviations.
-You can also map key combinations to commands, as long as the first key
-    isn't a valid command by itself (think emacs rules).
-The named buffers also allow you to execute commands, using the @ vi mode
-    command, which executes a named buffer coming after it (so @a executes the
-    buffer that you would see if you did "ap). So in effect @ is available
-    for creating any two-keystroke map you want.
------ final notes on mapping ----
-At least one source recommends creating a file called abbreviations in the
-    $VIM directory (which I assume is ~.vim for me), which has the ex
-    commands to create the abbreviations for example
-       ab Xticky = /devel/ticky/ticky "abbreviation for ticky
-       map k d} "delete rest of my function
-    and then source it from your .vimrc file by including the line
-       source $VIM/abbreviations
-    (this kind of sourcing is a good general way to break up .vimrc if
-    it gets big; it can also reduce the need for comments if you have one
-    source for abbreviations and macros, one for setting basic variables,
-    one for python stuff, one for makefiles [you have to use hard tabs],
-    etc...).
-Page 128 of the LTVVE pdf has several examples of using :map, both for trivial
-    tasks and for bigger formatting tasks. If I want to do anything but the
-    most trivial mapping, this is probably a good reference to look at.
-
-*Some more notes here and there*
-Page 136 of the pdf (114 of the book) has some stuff on ex scripts, which
-    can be a useful tool within a shell scripting environment. Sed and awk
-    are more powerful, but ex allows you to do some simple things like
-    substitutions from the command line without having to learn a new tool's
-    rules (or having to figure out string processing in Python and write it
-    up).
-Page 142 starts a section on basic vi for programming. It lists a few obvious
-    things:
-    :set autoindent    and    :set shiftwidth=4   are some pretty basic
-        sets you probably want in your .vimrc.
-    With autoindent, doing Ctl-t and Ctl-d in *insert(!)* mode will tab
-        over and 'de-tab'.
-    In command mode, << and >> will move the line left and right in the same  
-        way that Ctl-t and Ctl-d do in insert mode.
-    Changing tabstop is not recommended unles you also do :set softtab,
-        because any tabstop other than 8 will make your programs look funny
-        in most other UNIX system tools, which will still assume 8 spaces per
-        tab.
-    The % movement command, if you are sitting on (){}[], will
-        jumps the cursor back and forth with the matching bracket.
-        If you aren't on one, it searches forward to the next open or close,
-        and then jumps to the matching pair.
-    The :set showmatch option will show matching braces, parentheses, etc.
-        I think you don't need it if you are using any standard plugin, though.
-    The :tag command is useful (although fancy plugins can eliminate the need).
-        First, run ctags on the file(s) you want to have in the current
-        directory, buy running `ctags filepattern(s)` where the pattern
-        can be a string (myfile.c) or a pattern (*.py) and might need to
-        include paths.
-        Then, you can use :tag functionname to find functions (and I assume
-        classes, etc) in any file read by ctags (ctags makes a file called
-        tags in the directory you called it). Vi will automatically
-        open the file and put your cursor in the right spot.
-        As usual, of course, you have to first save your current file or else
-        use :tag! and discard changes...  
-        Okay, so it looks like on a very basic system you might have plain 
-        ctags, which only does C and C++, and only finds functions.
-        But you can (and I have done so) install ebuberant ctags, which handles
-        classes, macros, enums, structs, members, variables and methods in
-        C/C++, as well as handling all the other common languages (not sure
-        about R). LTVVE has a decent discussion on page 151 of the pdf. It has 
-        a quick discussion of vim specifically on p 154.
-    In vi clones, you can typically return to your original location
-        by typing ctl-t in command mode because the editor saves tagged
-        locations in a stack of jumps. So you can go forward by tagging things
-        you need to look at, and backward, at whim.
-    In vim, if incremental searching isn't working, you should do :set
-        incsearch. Then, ctl-x s and ctl-x r will do forward and backward
-        incremental searches
-    I can't imagine why I would want to dump vim for the original vi,
-        but on p. 163 LTVVE has the link for a copy of BSD Unix's vi that
-        will compile on most systems.
-
 *****************************************
 * Vim-specific features *****************
 *****************************************
@@ -798,78 +299,25 @@ Then, you can fold all with zM and unfold all with zR. You can fold and
     unfold one level at a time (in the whole buffer) with zm and zr, and 
     you can toggle folding on a particular line with za.
 
-* Visual mode *
-v enters normal visual mode, V enters line visual mode, ctl-V enters box visual
-    mode. Then use standard motion commands to select, and exit visual mode 
-    either by hitting y, c, d, or ESC. You can precede the y, c, d by a named 
-    register if you desire, just as in normal mode.
-
-* Multiple windows *
-:split and :vsplit will create windows (top and bottom or left and right). They
-   open the same (current) file if used by themselves.
-:split filename will open a new file and split at the same time. Obviously,
-   :split and :e filename will accomplish the same thing.
-See p 199 (pdf) of LTVVE for more info on :split, :vsplit, and the various
-   options and modifiers.
-You can move between windows with the mouse, or using Ctl-W plus any standard 
-   vi movement command (jklh, Ctl-j etc, or arrow keys). You don't have to save
-   files before changing windows, unlike switching buffers.
-If you have a ton of windows open, you can do several special movements:
-   Ctl-w Ctl-p will toggle back and forth with prev window
-   Ctl-t and Ctl-b will go to the top left and bottom right if you have a lot
-       of windows open in either a vertical or horizontal sense.
-You can move windows around in one of two ways:
-   Move the layout (window sizes) along with the buffers:
-       C-w r rotates right/down, C-w R rotates left/up.
-       C-w x and C-w X let you switch windows in a row or column
-           by default, it exchanges with the next window, but 
-   Move the windows but not the layouts (so each buffer is resized to the 
-   existing size of that window):
-	Ctl-w J,K,L,H,T,B move the windows in a manner analogous to the
-           way that Ctl-w j,k,l,h,t,b move between windows.
-Resizing windows: Ctl-w +,-,<, and > resize the window vertically and 
-   horizontally, tho in gvim it's probably easier to just use the mouse.
-   There are options, see p 207 of LTVVE pdf...
-Closing windows:
-   First, you need to be aware that if you have :set hidden, a closed
-   window's buffer is retained and can be used for the buffer commands
-   below; otherwise it is like doing a vi :q command and the buffer
-   disappears whenever the *last* window on a particular buffer is closed.
-       That said, you can close windows a number of ways, see p214.
-   Ctl-W q and Ctl-W c both close the active window... they behave differently
-   with respect to tabs (which I know nothing about yet).
-   Ctl-o and :only will close all windows *except* the active one.
-   If :set hidden is *not* set, then :hide will close the window and hide but
-   not close the buffer... the others will close the buffers in that situation.
-
-* Buffers (vim) *
-Technically, vi doesn't have buffers like emacs (although I used the term
-   in my discussion above). It only has files, and enforces a strict
-   relationship by making you save the buffer to a file before switching
-   files. If you use the :n and :N commands from the vi discussion above,
-   you are not technically changing buffers, but rather switching files,
-   which is why you have to save first.
-Vim, on the other hand, does have buffers as well as vi files.
-   If you use the :n and :N commands, and open things using :e, you will
-   get vi buffers, at least if you haven't done :set nocompatible. If
-   you have done :set nocompatible, I'm not sure; I think that at least
-   :e will create a buffer for you (?).
-But you can use alternative commands, see p208, to work with buffers
-   (including special buffers analogous to emacs' "scratch"). The summary
-   on p211 is nice.
-Note: I'll need to investigate to be sure, but it may be that if you use
-   multi-buffer editing rather than multi-file editing, you can in fact
-   mark different files in the same mark dictionary (a disappointment I
-   encountered earlier).
-
-* Tabs *
-These aren't the same as buffers; they are more independent in some ways.
-I don't know the details, but p. 191 of the pdf has a blurb on them, and
-I should probably google some more discussion about the distinctions between
-  vim windows
-  vim buffers
-  vim tabs
-  pure vi multi-file editing
+THIS IS WHERE I AM IN COPYING NOTES OVER. IN TERMS OF THE BOOK, MY
+REREADING HAS REACHED THE START OF PART II ON VIM. WHAT I NEED TO DO
+IS FINISH COPYING THIS STUFF OVER AND THEN FIGURE OUT WHERE TO PUT THE
+INFORMATION LISTED ABOVE IT (WHICH IS ALL STUFF I CAME ACROSS AFTER HAVING
+WRITTEN THESE NOTES) AS WELL AS REREADING SOME OF THE OTHER VIM STUFF.
+...........
+THE GOAL IS TO DELETE THESE NOTES, WHICH HAVE BE COME A DINOSAUR, AND REPLACE
+THIS FILE WITH 'vim_new_notes.txt' WHEN I'M DONE. LEARNING/RELEARNING SOME
+BASIC FEATURES ALONG THE WAY IS GOOD, BUT THE REAL GOALS ARE TO HAVE:
+ (a) a faster reference when I forget something
+ (b) a quicker hyperreference to skim now and then for refreshing my sense
+     of possibilities (obviously if I know of a feature and can't recall the
+     command, google is fine, but I have to know it exists in order to look)
+ (c) a leaner discussion of basic features so that I can put in extended
+     discussions, if necessary, of harder topics like regexp's, ctags,
+     and plugin functionality.
+ (d) a reference that is more willing to rely on the content of the book
+     for explaining the stuff that I can't do justice in quick notes.
+...........
 
 * Vim for programmers *
 I already discussed vi for programming above, and a tiny blurb with no detail

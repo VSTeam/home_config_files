@@ -23,3 +23,6 @@ map  "+y
 " This makes omnicompletion more useful. Not sure if it will help with
 " ctags and such.
 imap c :pca
+" Completion: tab-c will do omni-complete and tab-l will do lines.
+inoremap <tab>c 
+inoremap <tab>l 
