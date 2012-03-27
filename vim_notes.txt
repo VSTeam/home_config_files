@@ -1,0 +1,384 @@
+*****************************************************
+* SECTION 0: Things I need to work on               *
+*****************************************************
+
+Completion: use C-n, tab-c, or tab-l (the last two are mappings to C-x C-o
+and C-x C-l). Hele C-n won't pull up a preview window, whereas tab-c will,
+and tab-l is the only way to get line completion.
+
+Scrolling: use zz, zt, and zb more often.
+
+Tabs: use them more maybe, and use C-pgup and C-pgdn?
+
+Searching: try to use *, #, g*, and g# more often. And DEFINITELY start using
+the % command
+
+More searching: start learning at least basic regular expressions.
+
+remember gc + movement!
+
+
+
+*****************************************************
+* SECTION 1: Basic features, mostly available in Vi *
+*****************************************************
+
+Basic commands (no description)
+*******************************
+:e, :w, :x, :q!, :tabnew, :tabn, :tabp, :vsplit, :split
+CC, DD, d(movement), c(movement), C, D, x, X
+u, C-r, U (undo all changes to current line)     [note: only u, U in plain Vi]
+y, p, P, yy  ...  in my .vimrc: C-y, C-p   to replace "+y and "+p
+    In plain vi, probably the best way to clipboard copy/paste is using your
+    terminal's copy and paste commands.
+"(letter) for registers (also called buffers, but not as in a file buffer).
+For old buffers, "1, "2 etc is supposed to work, but it doesn't seem to.
+v, V, C-V    (vim only.: for regular, line, and block... V is most common)
+O, I, i, a, A, o ... also J, r, s and don't forget C as insert method
+Don't forget the all important `.`
+
+Every search and scroll command I need (and all of these are h)
+******************************************************************
+/, ?, *, #, g*, g#, :noh, f, F, t ... `,`... `;`
+m(letter), '(letter), ``, { and }, ( and ), and most importantly % 
+m(letter), '(letter), `(letter) ... and for last mark you can do: '', ``
+gg, G, (number)G, 0, ^, $
+zz, zt, zb      versus      H, M, L  ... also (number)H and (number)
+[ and ] are modifiers; use them along with [, {, or ( and ], }, or )
+...Note:
+    This frees up - and +.
+
+Parts of LTVVE probably worth rereading (and not)
+*************************************************
+Topics that I can see needing to look up:
+    Basic ex commands (mostly to modify searches, but also other line commands)
+    Regular Expressions... hard to write short notes, but LTVVE covers well.
+Topics that I can see reading lo actually learn:
+    Regular expressions (I really need to learn these for both vi and unix)
+    Mapping examples (hard to think of what's possible w/o studying a bit)
+    The @ functions (I never remember this macro language... it's great!)
+******
+If you forget something basic, Ch4 might be worth a skim... 1-3 are useless.
+    Technically ch 3 covers searches, but it doesn't cover regexps => useless
+Ch5, which starts on p.77 of the pdf, covers ex basics and could be worth
+    a read if you are having trouble with ex basics or want to review the
+    ex copy/cut and paste/delete functions.
+    The :s command is not covered here, but various types of ranges and
+    filters are, which affect :s.
+    Also, if you have to use plain vi, and you really need to be able to do
+    multiple files (I'd say this would be very rare), the commands here are
+    what you need (they differ from vim buffer commands a bit, plus you always
+    have to either save or abandon changes before switching).
+Ch6, which covers :s and also covers regular expressions (which affect / and ?,
+    and, to the extent that they are the same, can be usef with shell 
+    commands).
+Ch 7: Covers a lot of cool vi features here and there.
+    p100 (pdf): using Unix commands to act on text in vi and vim (not useful?)
+    p103: Abbreviations and mappings: very useful, esp in .vimrc but
+        also as temporary mappings or abbreviations, something I haven't been
+        doing. It provides lots of examples of mappings. There's 10 pgs of good
+        stuff here.
+        Note: I think it's discussion of insert-mode mapping may be out of
+        date because vim uses the imap function. I may be wrong.
+    113: on a related note, and to a greater extent than mapping this is
+        suited to programming one-time macros, are the @ functions, which run
+        a register (or 'buffer' in a non-vim sense) as a vi command.
+        They also work in ex mode, just do :@(buffer label).
+    There's a quick discussion of tags, but vim tagging supercedes vi tagging.
+Ch 8: There's not much here (it's mostly a preface to the rest of the book),
+    but starting on p. 129 there's a description of exhuberant ctags that may
+    be useful.
+
+
+Ex Coding commands (indentation and code search)
+************************************************
+<< and >> ... if preceded by a number in vi mode they move multiple rows,
+    if preceded by number in visual, they move the whole block multiple times.
+    Note: > and < can also be used with motion commands in vi mode, or
+    with the visual selection commands if you are running vim rather than vi.
+C-d and C-t do the same things in insert mode (which, we note, makes the
+    [TAB] key usable for mapping to other things... maybe I should make it
+    a prefix for all my .vimrc commands?
+There are some commands that can reset indent levels for just one line or
+    everything, see p120 of LTVVE, but only if you can do C-d (I can't because
+    I've mapped that to a fold-docstring hack).
+The % and [/] search commands deserve a second mention here, since they are
+    wonderful for coding.
+
+
+
+Search and Replace
+******************
+I already covered search (I need to learn patterns, tho).
+    One way to search-and replace is to do n. or N.
+    This is sometimes easier than trying to figure out the range for :s
+The general search pattern is :X/old/new(/gc), where X is line range.
+X can be blank (thisline), %(file), `3,44` (lines 3 to 44), `7,$` (7 to eof),
+    .,+ (this line and the next), -3,+5 (three lines earlier to 5 lines later).
+X can also be the output of a filter... :Xg/pattern returns the lines on which
+    `pattern` is found, so :Xg/pattern/s/old/new/gc will affect those lines
+    in range X (which itself could be the output of a filter but let's not get
+    crazy) in which pattern was found.
+Note: if you do a one-live substitution, that is :s/old/new/g, then you can
+    repeat it as many times as you like with just :s on new lines (until you
+    do a different substitution)
+Note: Both searches and substitutions can be much more useful with regular
+    expressions (as can shell commands)... not only can the regex's be useful,
+    but *not* knowing them can actually be a problem in that they mess up
+    your simple searches. See Ch6 of LTVVE (starts page 93 of pdf), which
+    is all about :s and regular expressions and their vim macro extensions.
+Note: this is more search than search-and-replace, but the / does emacs-style
+    incrsearch... EXCEPT if you forget to hit enter and instead hit C-c, you
+    go back to the starting point!
+
+Occasionally useful things
+**************************
+:sh,  :!(shell command), :=  (to find how many lines) 
+:r filename (appends that file to the open file)
+If you have spellcheck on, z= gives alternatives.
+
+***************************************************************************
+* SECTION 2: Vim features (mostly built-in or common (not custom) scripts *
+***************************************************************************
+I'm including features that depend on installing standard files like
+syntax or indentation for a particular language, and some basic plugins,
+but not custom changes in my .vimrc
+*****************************
+*****************************
+
+:ex or :Sex (ex with split) are the best built-in ways to look at directory.
+
+Window commands: Those I mentioned at the top are useful. For other things
+like resizing or rotating, I would either look it up (if in a terminal...
+in that case you probably shouldn't be doing nontrivial windowing anyway)
+or use the mouse (in gvim/macvim)
+
+Book Stuff
+**********
+Chapter 10 (181): starts with a discussion of help and navigation... note that
+    the navigation of help actually uses tags! Help also 'tab completion'.
+    :help startup gives background on how .vimrc works (I'm still fuzzy on some
+    of the fancier stuff).
+    It discusses some of the startup options and a few system-related details
+    that affect vim.
+    On 191, there's a discussion of vim's extended regular expressions... I'm
+    not sure how closely they match grep.
+Chapter 11 (195): Windows and buffers. Documents things like fancy splitting
+    with non-default option, resizing and rotating using the keyboard,
+    using ex commands on multiple or non-active windows and buffers.
+    On page 212, it discusses how to use windows with tags, which is very
+    useful.
+Chapter 12 (217) discusses vim scripts. It is a longer chapter, basically
+    a short intro to a real if simple programming language. If I need to write
+    them, this would be a good read (or if I just want to learn a new easy
+    programming language and have a few cool features in mind to create).
+    Note: you can also extend vim in python. That is not covered here, but
+    for me it is probably not a bad thing to learn.
+Chapter 13 (241) discusses gvim. Mostly just usable as a reference and even
+    then google is fine. I did learn, however, that you can make a seperate
+    .gvimrc file instead of putting your graphical jusk in an if-block.
+    On the other hand, I don't know if macvim would recognize that...
+    NOTE: There is one useful tidbit: I can customize my mouse usage, which
+    would be a nice way to avoid this accidental entry into visual mode that
+    I seem to get a lot. I like mouse use as a possible navigation tool,
+    but the visual mode seems more annoying than useful as a rule.
+    I think that `:set mouse=a` followed by `:set mouse-=v` does it, but I'm
+    not certain.
+Chapter 14 (261) is vim enhancements for programmers. This chapter could
+    become a major reference for folding, indenting, completeion, syntax
+    highlighting, tagging, and (if I go to C/C++/Java etc, and probably as
+    a rough guide to latex/lillypond behavior) compile/edit looping.
+Chapter 15 (307) talks about some other cool stuff. Editing binaries seems
+    pretty useless, but I can imagine cases (writing an application that deals
+    whith data at a low level, e.g. music or image files) where it might be
+    used. It covers backups and directory switching. It talks about making
+    html files from text, which could actually be pretty handy when you need
+    an html but don't care if it is pretty. It discusses vimdiff briefly...
+    I think you have to call this up from the command line (you can't do a diff
+    in an open instance of gvim) but I might be wrong. 
+    It offers a quick discussion of undo-redo paths (beyound the linear u vs
+    C-R path) and branches... mostly just points you to a help file, but if you
+    read that file, it seems that with these undo 'branches', you can undo any
+    sequence of undo and redo like in emacs.  
+    It discusses saving sessions, which isn't that interesting to me now but
+    could be handy. I could actually imagine saving different pre-set
+    'sessions' for different projects, e.g. a pico session and a statrix
+    session.
+    gvim can be used to work on remote machines. This is handy because if
+    you go in with a terminal, you would have to use terminal vim, which
+    is often not as nice.
+    At the end is some discussion of line size issues, and a short (very
+    incomplete) list of vim abbrevations for full ex commands, like
+    nu for number.
+
+TO-DO:#############################
+1. I still need to move over the stuff from the old notes file.
+2. I need to add in stuff from Ch 14 and 15 maybe, particularly folding.
+3. Eventually I need to add tags.
+4. I may or may not decide to do a section on reg-expressions or a section
+   on the details of ex ranges and such. I added these things in as where
+   to look in the book for a reason: so that I don't need to. But writing
+   notes might help me learn some of the basics (especially the most important
+   basic for a beginner: which 'standard' characters do I have to backslash
+   out in order to treat as a normal string)
+4. Reorganize, maybe?
+5. Make a top "habits to create" section with the stuff I want to work on.
+6. Anything with plugins?
+
+Tag Stuff
+*********
+    (This is just a list of what to reread when I write tagging notes)
+    Chapter 7 introduces basic vi ctags. Chapter 8 briefly discusses exuberant
+    ctags. Chapter 10 talks about tags when doing help. Chapter 11 talks
+    about tags and windows.
+
+Tabs, buffers, and Windows
+****************
+C-W ... t, b, arrow, p, c, o
+:tabnew, :tabclose, C-pgup, C-pgdn
+:bd, :BD, :bn, :bp, :ls, :b#  ... C-6 toggles 2 buffers, can be handy
+
+So-called "Visual" Commands
+***************************
+These are usable in selection for visual mode *or* as a range selection on
+editing commands (the kind that would normally be follwed by motion like
+`d` or `c` or `gc` or `<` and `>`. So things like `diw` to delete a word or
+`gcip` to format the paragraph or `caw` to change the word.
+...
+Here ax and ix differ in that intervening whitespace is included in the
+selection for ax (add x) while not ix (inner x). The options are:
+...
+aw, aW, iw, iW, as, is, ap, ip ... for ... word (as in w and b), word (as in
+W and B), sentence, and paragraph.
+...
+These are great because unlike normal vi commands they don't require navigating
+to the start or end before taking an action.
+
+Completion
+**********
+I'm still not clear about this. I sort of understand omnicomplition and
+line completion (line completion is fantastic with testing, although in
+many settings copy-paste works about as well).
+Apparently, however, there is also a user-defined completion. The difference
+seems to be small (both use a filetype-specific `complete-function`), but
+the commands are different (C-x C-o vs C-x C-u), and I think omnicompletion
+auto-adjusts for filetype whereas user-defined completion does not, and the
+two complete-functions (`omnifunc` and `completefunc`) can point to different
+things.
+...
+In the context of completion, you can use the arrows or C-n and C-p to
+navigate the dropdown. Hitting enter inserts the completion.
+...
+You can also use C-n to get a completion, using 'generic completion'. I'm
+not sure what generic completion is. I think that unlike omnicompletion,
+it does not pull up a menu, and moreover I think it will not do line
+completion.
+...
+To get completion for methods is tricky. Vim doesn't know the class of
+your objects because python isn't strongly typed (I think in a language
+like C or Java it would). But, if you need a refresher and don't want
+to open ipython, one way to get completion is to type the class name,
+rather than the object name, and then try to get completion.
+...
+To get an arguments list if you don't need completion of the actual function,
+you can write out the full name but *leave off* the opening (. That way,
+when you do the omnicompletion call, it fills in the ( and gives you the
+preview window with the call and docstring.
+
+*******************************************************************
+* SECTION 3: Custom Changes (unusual plugins and my own mappings) *
+*******************************************************************
+This is to document my own copy of vim so I don't forget things.
+*****************************
+*****************************
+
+C-p and C-y do clipboard copy and paste (for C-p, it pastes above not below)
+In insert mode, C-p c is like :pc, closes preview window.
+tab-l and tab-c will give line and omni completion, respectively.
+    Note that this forces you to use C-t, C-d for tabbing in insert mode.
+C-d and C-f fold a docstring or function (my mode is manual), although
+    both of them suffer from occasional bugs.
+
+Appearance: 
+I set the font to a rather small 8. One way to partially make
+up for this is to :set linespace=2, which gives some extra vertical
+spacing (this is nice for blocks of code anyway).
+For color schemes, the best built-in options are peach (lighter but not
+bright enough to be hard on eyes), pablo and murphy (black background),
+desert and slate (grey background), and darkblue.
+
+************
+* Appendix *
+************
+
+*Regular Expressions*
+The escape character, to treat any regexp character as text, is \, and
+of course \\ produces a text \. Other special characters are:
+   / ---  the delimiter for the regexpr
+   . ---  allows any *single* character in that position
+   * ---  at the end of a string, allows 0 or more of the preceding character
+          (so trades* would match trade, trades, tradess, etc.)
+          If preceded by another special regexpr character (not escaped), it
+          will match whatever that is. So .* represents any string of any size.
+          Note that in most programs, * does what .* does here. (bad vi!)
+   ^ and $ --- requires the expression following/preceding it to be found at
+               the beginning/end of a line. I assume they strip whitespace 1st.
+   [abc] --- matches any character listed between the brackets.
+             You can use [a-c] to represent any character between a and c
+             in ascii coding... you should probably only use this for two
+             lowercase letters, two uppercase, or two digits.
+             Any combination of those rules is okay, for instance [1-9a-z.,]
+             will match any digit except zero, any lower case letter, and
+             any period or comma.
+    [:keywd:] --- used inside of [] to refer to POSIX classes
+          classes include
+            [:alpha:] [:lower:] [:upper:] [:alnum:] (alphanumeric)
+            [:space:] (whitespace) [:blank:] (space and tab only)
+            [:punct:] [:graph:] (visible--all but whitespace)
+            [:digit:] [:xdigit:] (hexadecimal digits)
+    [.unit.] --- Treats the string inside as a single unit. Used inside of []
+                 to do things like [[.bid.][.ask.]], which is otherwise hard
+                 to do.
+              note: there's also an [= =], but I doubt I'll find that useful.
+               See LTVVE page 99 of the pdf, 77 of the book.
+   ~ --- refers to whatever regular expression was last used. If it's used
+         as in the 'search for' pattern, it looks for the last 'search for'
+         pattern and if in the 'replace with' pattern it looks for the last
+         'replace with pattern'. The behavior has some quirks, so not 
+         recommended.
+   \<ab and ab\> --- These will look for when ab begins or ends a word,
+                     respectively (words being delimited by whitespace or
+                     punctuation). Note that you needn't escape < and >.
+There are also some funkier characters out there, some of which need to
+be escaped if you want to search for them:
+  & --- can only be used in the replacement string: it puts whetever the
+        search pattern was (could be a string, or a variable pattern in which
+        case it will use the actual string found for each instance) into the
+        replacement pattern, so for example you could use
+         :s/time/&s   as shorthand for :s/time/times.
+  \( and \) --- very useful but a bit complicated to explain. They delimit
+                'search variables' that can be referenced by \1, \2, \3, etc.
+                They should only be used in the search pattern.
+  or --- used to choose between variables as set using \( and \).
+  \1, \2 \3, etc --- used only in the replacement pattern, to refer to
+                     items from the search pattern marked by \( and \).
+  \u and \l --- In the context of the search-variables above, these can be
+                used to change the case of the first character of the
+                replacement. See LTVVE p99 (pdf) or 77 (book)
+  \U and \L, \e --- same as \u and \l except everything in the replacement
+                    string (not just the first letter) is forced to the
+                    desired case; you can stop it early by putting \e in
+                    to signal 'end of force case'
+      Now, we need an example:
+         %s/\(ask\) or \(bid\)/\2 or \1/
+            will swap 'ask' with 'bid' in the whole buffer. On the other hand
+         %s/\(ask\) or \(bid\)/\u\1 \u2/
+            will capitalize the first letter of all instances of 'bid' and 
+            'ask' in the buffer. 
+The rules above are fairly complete, but in order to absorb them you need
+to use them or regularly look at examples (you can't realistically use them
+until you've seen enough examples to at least think of it, after all).
+The book pp 103-116 (pdf numbering) has a lot of pattern-matching examples,
+and also examples of how to use various commands and options to get desired
+behavior. It is probably worth rereading periodically at least until I am
+happy with my ability to do search-and-replace without wasting time.

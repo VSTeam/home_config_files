@@ -17,9 +17,10 @@ if has("gui_running")
     set columns=180
     " enable use of mouse
     set mouse=a
-    set guifont=Monospace\ Regular\ 7.2
+    set guifont=Monospace\ Regular\ 8
     set equalalways
-    colorscheme slate
+    set guioptions-=T
+    colorscheme desert
 endif
 
 " Set shell title to filename and path. Restore on exit.
