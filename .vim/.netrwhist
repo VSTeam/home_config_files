@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/devel/ticky/ticky/indicator'
+let g:netrw_dirhist_2='/devel/pico/pico/pico2'
+let g:netrw_dirhist_3='/devel/bart/doc'
+let g:netrw_dirhist_4='/devel/four/four'
+let g:netrw_dirhist_5='/devel/four/four/src'
