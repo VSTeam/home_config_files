@@ -26,6 +26,7 @@
 	#wtf = true
 [diff]
 	rename = copy
+	tool = meld
 [push]
 	default = tracking
 [branch]

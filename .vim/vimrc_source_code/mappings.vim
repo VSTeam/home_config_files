@@ -11,7 +11,7 @@
 " set.
 map  :set nowrapscan?defjmf/defkzf'f:set wrapscan
 map  :set nowrapscan?"""mf/"""zf'f:set wrapscan
-map  Ofrom IPython import embed; embed()
+map  Oimport pudb; pudb.set_trace()
 " clipboard cut and paste: can only paste above, unfortunately.
 " samething like C-y y should still work correctly, I hope
 map  "+P
