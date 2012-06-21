@@ -6,16 +6,20 @@
 
 " *** VI MODE ***
 
-" Set C-f and C-d (they are both paging commands I don't use) to fold
-" functions and docstrings. These will only work if you have manual foldmethod
-" set.
-map  :set nowrapscan?defjmf/defkzf'f:set wrapscan
-map  :set nowrapscan?"""mf/"""zf'f:set wrapscan
+" Set C-b to insert a breakpoint.
 map  Oimport pudb; pudb.set_trace()
 " clipboard cut and paste: can only paste above, unfortunately.
 " samething like C-y y should still work correctly, I hope
 map  "+P
 map  "+y
+
+" fuzzyfinder: 
+"     C-a will look at (a)ll buffers
+"     C-d will look at (d)irectories
+"     C-f will look at (f)iles
+map  :FufBuffer
+map  :FufFile
+map  :FufDir
 
 " *** INSERT MODE ***
 
@@ -23,6 +27,5 @@ map  "+y
 " This makes omnicompletion more useful. Not sure if it will help with
 " ctags and such.
 imap c :pca
-" Completion: tab-c will do omni-complete and tab-l will do lines.
-inoremap <tab>c 
-inoremap <tab>l 
+" Completion... C-l and C-o can be used for C-x C-l and C-x C-o
+inoremap  

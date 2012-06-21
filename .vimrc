@@ -9,7 +9,6 @@ set nu
 " color column 80
 set colorcolumn=80
 
-" gui window stuff
 if has("gui_running")
     winpos 1600 0
     set textwidth=80
@@ -17,10 +16,16 @@ if has("gui_running")
     set columns=180
     " enable use of mouse
     set mouse=a
-    set guifont=Monospace\ Regular\ 8
     set equalalways
     set guioptions-=T
-    colorscheme desert
+
+    " Solarized needs boldface; other schemes don't.
+    "colorscheme evening
+    "set guifont=Monospace\ Regular\ 8
+    colorscheme solarized
+    set guifont=Monospace\ Bold\ 8
+else
+    colorscheme murphy
 endif
 
 " Set shell title to filename and path. Restore on exit.
