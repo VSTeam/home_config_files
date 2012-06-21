@@ -22,6 +22,7 @@ if has("gui_running")
     " Solarized needs boldface; other schemes don't.
     "colorscheme evening
     "set guifont=Monospace\ Regular\ 8
+    set background=light
     colorscheme solarized
     set guifont=Monospace\ Bold\ 8
 else
