@@ -12,6 +12,8 @@ map  Oimport pudb; pudb.set_trace()
 " samething like C-y y should still work correctly, I hope
 map  "+P
 map  "+y
+" highlighting is way too useful not to use, but :noh is a pain. Use C-h
+map  :noh
 
 " fuzzyfinder: 
 "     C-a will look at (a)ll buffers
