@@ -14,6 +14,11 @@ map  "+P
 map  "+y
 " highlighting is way too useful not to use, but :noh is a pain. Use C-h
 map  :noh
+" windows... if you are using fugitive, omni-completion, tag-chasing with
+" splitting, or a few other tools, you wind up having to close windows a lot.
+" This sets the easy-to-grab C-u (unopen is my questionable mnemonic) to do
+" C-w c
+map  c
 
 " fuzzyfinder: 
 "     C-a will look at (a)ll buffers
