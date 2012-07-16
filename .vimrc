@@ -115,4 +115,3 @@ source ~/.vim/vimrc_source_code/mappings.vim
 " Nerdtree: Toggle nerdtree with F2; ignore *.pyc files
 map <F2> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
-

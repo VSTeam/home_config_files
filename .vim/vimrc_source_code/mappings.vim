@@ -28,6 +28,9 @@ map  :FufBuffer
 map  :FufFile
 map  :FufDir
 
+" C-s saves. I do this mostly because I get :q in so many files.
+noremap <c-s> :w
+
 " *** INSERT MODE ***
 
 " `C-p c` in insert mode will execute the :pc (preview close) command.
@@ -36,3 +39,5 @@ map  :FufDir
 imap c :pca
 " Completion... C-l and C-o can be used for C-x C-l and C-x C-o
 inoremap  
+" Saving... C-s takes you out of insert mode *and* saves.
+inoremap <c-s> <c-c>:w
