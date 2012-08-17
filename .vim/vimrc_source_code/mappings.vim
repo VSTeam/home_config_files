@@ -12,6 +12,9 @@ map  Oimport pudb; pudb.set_trace()
 " samething like C-y y should still work correctly, I hope
 map  "+P
 map  "+y
+" It bothers my that dd vs D and cc vs C are consistent but not yy vs Y.
+" This fixes that.
+map Y y$
 " highlighting is way too useful not to use, but :noh is a pain. Use C-h
 map  :noh
 " windows... if you are using fugitive, omni-completion, tag-chasing with
