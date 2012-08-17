@@ -8,6 +8,13 @@ As a result, I had to use .gitignore as the ignore for this repo only,
 and so my global gitignore file had to be renamed .gitignore_global,
 which is fine because you specify the file in .gitconfig.
 
+TODO:
+A better solution, and something I should try to get to eventually,
+is to make this a repo sitting inside of ~, and to have scripts to
+(a) copy all the files out of the repo into ~, and (b) copy all
+the files from ~ into the repo, probably going file by file and
+letting the user decide which changes to make.
+
 Whenever you want to add a file to the repo, you need to add a line
 to .gitignore. Otherwise, you just have to go git commit -a
 and git push origin master after any config alterations.
@@ -15,3 +22,20 @@ and git push origin master after any config alterations.
 Notes regarding how config works are in config_notes, although I don't
 really maintain that file so there may be incorrect things from
 misunderstandings I had in the past.
+
+To get a solarized terminal set up, go to gnome-terminal-colors-solarized
+and run ./install. The shell will ask you what profile you want to apply
+changes to, as well as what profile to set.
+    Note: as far as I know, the solarized terminal colors are the only
+          linux-dependent things here. Everything else should work on
+          Mac or any Unix version... I'm not sure about Windows, and
+          if the .bashrc isn't working it might be because you have
+          a .bash-profile or some such business.
+
+----------------------------------------------------------------------
+
+I don't have a copyright or license on any of this. Anyone who feels
+like using it is welcome to; do be advised that many of the packages
+in here have GPL licenses, including most of the plugins in .vim
+as well as the gnome-terminal-colors-solarized folder, by Sigurd 
+Gartmanan.

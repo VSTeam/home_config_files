@@ -83,9 +83,9 @@ case "$-" in
 
         # Declare the main prompt
         if [[ "$TERM" == "dumb" ]]; then  # no colors
-            PS1="${USERNAME}\h[\W]> "
+            PS1="${USERNAME}\h[ \W ]> "
         else
-            PS1="$GREEN\$(__git_ps1 '(%s)')$L_BLUE${USERNAME}\h[$GRAY\w${L_BLUE}]$GRAY \n> $NO_COLOR"
+            PS1="$BLUE\$(__git_ps1 '(%s)') $BLUE${USERNAME}\h[ \w ]\n> $NO_COLOR"
             # above, you can replace \w (full pwd path) with \W (current wd without the full path) to save space.
             #PS1="$L_RED${USERNAME}$L_BLUE\h[$L_CYAN\W${L_BLUE}]$L_GREEN> $NO_COLOR"
         fi

@@ -22,11 +22,13 @@ if has("gui_running")
     " Solarized needs boldface; other schemes don't.
     "colorscheme evening
     "set guifont=Monospace\ Regular\ 8
-    set background=light
+    set background=dark
     colorscheme solarized
-    set guifont=Monospace\ Bold\ 8
+    set guifont=Monospace\ Bold\ 10
 else
-    colorscheme murphy
+    set background=light
+    set t_Co=16
+    colorscheme solarized
 endif
 
 " Set shell title to filename and path. Restore on exit.
