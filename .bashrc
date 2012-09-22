@@ -120,4 +120,8 @@ fi
 # make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+##############################################
+# Turn off <c-s> and <c-q> in the terminal
+stty -ixon
+
 #**********************  END OF FILE <.bashrc> *******************************
