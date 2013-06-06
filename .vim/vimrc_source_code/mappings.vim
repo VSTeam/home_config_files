@@ -6,30 +6,26 @@
 
 " *** VI MODE ***
 
-" Set C-b to insert a breakpoint.
-map  Oimport pudb; pudb.set_trace()
 " clipboard cut and paste: can only paste above, unfortunately.
 " samething like C-y y should still work correctly, I hope
-map  "+P
-map  "+y
+map <c-p> "+P
+map <c-y> "+y
 " It bothers my that dd vs D and cc vs C are consistent but not yy vs Y.
 " This fixes that.
 map Y y$
-" highlighting is way too useful not to use, but :noh is a pain. Use C-h
-map  :noh
 " windows... if you are using fugitive, omni-completion, tag-chasing with
 " splitting, or a few other tools, you wind up having to close windows a lot.
 " This sets the easy-to-grab C-u (unopen is my questionable mnemonic) to do
 " C-w c
-map  c
+map <c-u> <c-w>c
 
 " fuzzyfinder: 
-"     C-a will look at (a)ll buffers
-"     C-d will look at (d)irectories
-"     C-f will look at (f)iles
-map  :FufBuffer
-map  :FufFile
-map  :FufDir
+map <Space> <Nop>
+map <Space>b :FufBuffer<Enter>
+map <Space>f :FufFile<Enter>
+map <Space>d :FufDir<Enter>
+" highlighting and breakpoints (really breakpoints should be filetype)
+map <Space><Space> :noh<Enter>
 
 " C-s saves. I do this mostly because I get :q in so many files.
 noremap <c-s> :w
@@ -40,7 +36,10 @@ noremap <c-s> :w
 " This makes omnicompletion more useful. Not sure if it will help with
 " ctags and such.
 imap c :pca
-" Completion... C-l and C-o can be used for C-x C-l and C-x C-o
-inoremap  
+" Completion... C-l can be used for C-x C-l
+inoremap <c-l> <c-x><c-l>
 " Saving... C-s takes you out of insert mode *and* saves.
 inoremap <c-s> <c-c>:w
+
+" Breakpoint. This really belongs in a filetype source file.
+map <Space>p Oimport pudb; pudb.set_trace()<c-s>
