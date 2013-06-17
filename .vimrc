@@ -109,6 +109,7 @@ set wildmode=longest:full
 source ~/.vim/vimrc_source_code/python.org.vim
 
 " abbreviations and mappings
+source ~/.vim/vimrc_source_code/tag_code.vim
 source ~/.vim/vimrc_source_code/abbreviations.vim
 source ~/.vim/vimrc_source_code/mappings.vim
 

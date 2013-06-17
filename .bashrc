@@ -1,10 +1,26 @@
 ############################################################################
+
+# Ghar stuff
+alias config='cd $HOME/ghar/home_config_files'
+export PATH=$PATH:$HOME/ghar/bin
+
 # My aliases
 alias gi='gvim --remote-silent'
 alias de='cd devel'
 alias da='cd data'
 alias quickcython='python setup.py build_ext --inplace'
-#### alias wrapping issues to make tab completion work ####
+
+# Tags. Dev tags are for my dev code. Dist tags, which shouldn't need to
+# be run often, are for dist package code (so I can get numpy, scipy,
+# matplotlib, etc). `distags` most likely has to be called as sudo.
+function devtags {
+    ctags -R --exclude=".git" -L $HOME/.devtagsrc -f $HOME/devtags
+}
+function distags {
+    ctags -R --exclude=".git" -L $HOME/.distagsrc -f $HOME/distags
+}
+
+#### alias wrapping to make tab completion work for `gi` ####
 
 # Wraps a completion function
 # make-completion-wrapper <actual completion function> <name of new func.>
