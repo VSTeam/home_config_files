@@ -24,6 +24,11 @@ map <Space> <Nop>
 map <Space>b :FufBuffer<Enter>
 map <Space>f :FufFile<Enter>
 map <Space>d :FufDir<Enter>
+
+" Nerdtree
+map <Space>n :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
+
 " highlighting and breakpoints (really breakpoints should be filetype)
 map <Space><Space> :noh<Enter>
 

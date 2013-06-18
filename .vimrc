@@ -106,15 +106,10 @@ set wildmode=longest:full
 "     set file format to unix (affects newline encoding; \n only not \r\n)
 "   --
 "   for makefiles, specifically make sure noexpandtab and shiftwidth=8.
+" NOTE: this should really be moved to a filetype source
 source ~/.vim/vimrc_source_code/python.org.vim
 
-" abbreviations and mappings
+" general source code
 source ~/.vim/vimrc_source_code/tag_code.vim
 source ~/.vim/vimrc_source_code/abbreviations.vim
 source ~/.vim/vimrc_source_code/mappings.vim
-
-" plugin-related code ---------------------------------------------------------
-
-" Nerdtree: Toggle nerdtree with F2; ignore *.pyc files
-map <F2> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['\.pyc$']
