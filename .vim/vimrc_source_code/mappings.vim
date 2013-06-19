@@ -41,6 +41,12 @@ noremap <Space>vb :vs<CR>:FufBuffer<CR>
 noremap <Space>hf :sp<CR>:FufFile<CR>
 noremap <Space>vf :vs<CR>:FufFile<CR>
 
+" ctags shortcuts for opening windows
+noremap <Space>vta :vs<Cr>:ta
+noremap <Space>vtj :vs<Cr>:tj
+noremap <Space>hta :sp<Cr>:ta
+noremap <Space>htj :sp<Cr>:tj
+
 
 " Nerdtree
 noremap <Space>n :NERDTreeToggle<CR>
@@ -143,6 +149,8 @@ inoremap <c-n> <Down>
 inoremap <c-p> <Up>
 
 " slightly more advanced movement
+" Notes:
+"    For whatever reason, M-f does not seem to be working (in terminal or gui)
 inoremap <m-b> <S-Left>
 inoremap <m-f> <S-Right>
 inoremap <c-a> <Esc>I

@@ -18,6 +18,7 @@ if has("gui_running")
     set mouse=a
     set equalalways
     set guioptions-=T
+    set winaltkeys=no
 
     " Solarized needs boldface; other schemes don't.
     "colorscheme evening
