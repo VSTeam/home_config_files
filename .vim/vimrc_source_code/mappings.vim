@@ -160,16 +160,19 @@ inoremap <c-e> <Esc>A
 "   Notes:
 "     M-d should work under most circumstances, but it could occasionally 
 "         result in funny cursor placement.
-"     Using C-k requires an additional k because I used C-k for char insertion
+"     I did not include C-k or C-u (delete line forward or backward) because
+"         they seem inappropriate for insert mode, and C-k is reserved for
+"         character mappings.
+"     I skipped C-Rubout (<c-BS>) because <BS> works fine (both in emacs and
+"         vim insert mode).
 inoremap <m-BS> <c-w>
 inoremap <c-d> <Del>
 inoremap <m-d> <Esc>lcw
-inoremap <c-u> <Esc>lc^
-inoremap <c-k>k <Esc>lc$
-inoremap <c-k><c-k> <Esc>lc$
 
 " undo within-line edits (not impt in vim, but impt in bash so I included it)
 inoremap <c-x><c-u> <c-u>
+
+" missing but important in the shell is C-y, which pastes the last deletion.
 
 " Bash emacs shortcuts for command line mode ----------------------------------
 
