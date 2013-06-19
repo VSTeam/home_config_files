@@ -3,20 +3,21 @@
 " http://benoithamelin.tumblr.com/post/15101202004/using-vim-exuberant-ctags-easy-source-navigation
 " http://vim.wikia.com/wiki/Browsing_programs_with_tags
 "
-" My setup is to have alias commands 'devtags' and 'distags', which will
-" run 'ctags -R --exclude=".git"', specifiying the devtags and distags files
-" in my home directory as the tags files (via the -f option) and using the
-" .devtagsrc and .distagsrc files in my home directory to specify the paths
-" over which to look for tags.
-"
-" See .bashrc, in the 'aliases' section, for these commands.
-"
-" I'm intending to include my .distagsrc and .devtagsrc files in my
-" home_config version control, but they would vary from computer to computer
-" depending on the file layout and such. And, of course, maybe more than two
-" of these would be suitable for some workspace setups.
-"
-" The remaining task is done here: I have to tell vim to look for those two
-" tags files. 
+" At the moment, I have .bashrc functions called devtags, distags, and
+" bigtags, which makes this redundant. Unfortunately, vim's shell doesn't seem
+" to read .bashrc, so I put a separate implementation here.
+
+command Devtags !ctags -R --exclude=".git" -L $HOME/.devtagsrc -f $HOME/devtags
+command Distags !ctags -R --exclude=".git" -L $HOME/.distagsrc -f $HOME/distags
+command Bigtags !ctags /bigdev/bottleneck -R --exclude=".git" --exclude="*.c" i
+            \-f $HOME/bigtags
+" Shortcut for Devtags only
+noremap <Space>t :Devtags<CR>
 
 set tags=$HOME/devtags,$HOME/distags
+
+" M-] v and M-] s chase tags in new windows
+noremap <m-]><m-h> :sp<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>

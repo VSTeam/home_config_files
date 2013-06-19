@@ -9,6 +9,7 @@
 " see what commands exist and what you might be overwriting. As long as you use
 " noremap, the commands you are overwriting should still be available for you
 " to remap.
+noremap <Space> <Nop>
 
 " general-purpose maps --------------------------------------------------------
 noremap <CR> :
@@ -24,22 +25,34 @@ noremap <c-y> "+y
 " This fixes that.
 noremap Y y$
 
-" ctags shortcut for calling devtags only (call distags and bigtags by hand)
-noremap <Space>t :!devtags<CR>
+" Make Space-w work like C-w
+map <Space>w <c-w>
 
 " Extension maps --------------------------------------------------------------
 
 " fuzzyfinder: 
-noremap <Space> <Nop>
-noremap <Space>b :FufBuffer<Enter>
-noremap <Space>f :FufFile<Enter>
-noremap <Space>d :FufDir<Enter>
+noremap <Space>b :FufBuffer<CR>
+noremap <Space>f :FufFile<CR>
+noremap <Space>d :FufDir<CR>
+
+" fuzzyfinder with auto-splitting:
+noremap <Space>hb :sp<CR>:FufBuffer<CR>
+noremap <Space>vb :vs<CR>:FufBuffer<CR>
+noremap <Space>hf :sp<CR>:FufFile<CR>
+noremap <Space>vf :vs<CR>:FufFile<CR>
+
 
 " Nerdtree
 noremap <Space>n :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
 " General purpose insert mode maps --------------------------------------------
+
+" Notes regarding builtin insert mode stuff:
+" ------------------------------------------
+" Del and BS work fine. The arrow keys work, but I am trying to avoid them.
+" C-y inserts the character immediately above the cursor. This can be
+" super-useful on occasion.
 
 " Saving... C-s takes you out of insert mode *and* saves.
 inoremap <c-s> <c-c>:w<CR>
