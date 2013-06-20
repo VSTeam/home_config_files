@@ -67,6 +67,8 @@ inoremap <c-s> <c-c>:w<CR>
 inoremap kj <Esc>
 " Tab completion, most basic (think about changing this to omni completion)
 inoremap <Tab> <c-n>
+"Untabbing needs a map, because C-d is used by my emacs bindings
+inoremap <m-t> <c-d>
 
 " Custom imaps leading with C-j -----------------------------------------------
 "
@@ -104,10 +106,9 @@ inoremap <c-k><c-e> =
 " j for a, because it is super fast
 inoremap <c-k>j a
 inoremap <c-k><c-j> a
-inoremap <c-k>J A
-" n for 1 and N for ~ (the mnemonic are oNe and eNye (from Spanish)
-inoremap <c-k>n 1
-inoremap <c-k>N ~
+" i for 1
+noremap <c-k>i 1
+noremap <c-k><c-i> 1
 " s for z (I wouldn't use this imap, but as a map it could be handy)
 inoremap <c-k><c-s> z
 inoremap <c-k>s z
@@ -128,13 +129,12 @@ noremap <c-k><c-k> }
 " e for equal
 noremap <c-k>e =
 noremap <c-k><c-e> =
-" j for a, because it is super fast
-noremap <c-k>j a
-noremap <c-k><c-j> a
-noremap <c-k>J A
-" n for 1 and N for ~ (the mnemonic are oNe and eNye (from Spanish)
-noremap <c-k>n 1
-noremap <c-k>N ~
+" j for A... note that this doesn't quite match the imap
+noremap <c-k>j A
+noremap <c-k><c-j> A
+" i for 1
+noremap <c-k>i 1
+noremap <c-k><c-i> 1
 " s for z (I wouldn't use this imap, but as a map it could be handy)
 noremap <c-k><c-s> z
 noremap <c-k>s z
@@ -193,10 +193,10 @@ cnoremap <c-e> <c-e>
 "     M-d won't work (vim has no equiv command)
 "         result in funny cursor placement.
 "     C-u and C-k delete big chunks, but not necessarily everything
-inoremap <m-BS> <c-w>
-inoremap <c-d> <Del>
-inoremap <c-u> <c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w>
-inoremap <c-k> <Del><Del><Del><Del><Del><Del><Del><Del><Del><Del><Del><Del>
+cnoremap <m-BS> <c-w>
+cnoremap <c-d> <Del>
+cnoremap <c-u> <c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w><c-w>
+cnoremap <c-k> <Del><Del><Del><Del><Del><Del><Del><Del><Del><Del><Del><Del>
 
 " ****************************
 " Stuff that needs to be moved
