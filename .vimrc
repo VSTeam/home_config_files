@@ -1,25 +1,8 @@
-" Temporary block #####################################################
-
-" Automatically open my mappings in a different tab
-tabnew /home/st/ghar/home_config_files/.vim/vimrc_source_code/mappings.vim
-command Ghar !ghar install
-tabNext
-
-" Disable the worst keys for which I have added imaps
-inoremap a <Nop>
-inoremap [ <Nop>
-inoremap ] <Nop>
-inoremap { <Nop>
-inoremap } <Nop>
-inoremap 1 <Nop>
-inoremap = <Nop>
-
-" End temporary block #################################################
-
-
-
-" drop vi compatibility
+" basic behavior
 set nocompatible
+set nobackup
+set history=500
+set spelllang=en_us
 
 " basic appearance ------------------------------------------------------
 
@@ -147,3 +130,32 @@ source ~/.vim/vimrc_source_code/python.org.vim
 source ~/.vim/vimrc_source_code/tag_code.vim
 source ~/.vim/vimrc_source_code/abbreviations.vim
 source ~/.vim/vimrc_source_code/mappings.vim
+
+" #####################################################################
+" Temporary block #####################################################
+" #####################################################################
+
+" Automatically open my mappings in a different tab
+if has("gui_running")
+    tabnew /home/st/ghar/home_config_files/.vim/vimrc_source_code/mappings.vim
+    vs /home/st/ghar/home_config_files/.vimrc
+    tabNext
+endif
+
+" Disable the worst keys for which I have added imaps
+inoremap a <Nop>
+inoremap [ <Nop>
+inoremap ] <Nop>
+inoremap { <Nop>
+inoremap } <Nop>
+inoremap 1 <Nop>
+inoremap = <Nop>
+inoremap <Esc> <Nop>
+" This is very temporary, to break old habits. I need the double : so that in,
+" eg, the Fugitive window (where <CR> is mapped), I can still get it.
+noremap : <Nop>
+noremap :: :
+
+" #####################################################################
+" End temporary block #################################################
+" #####################################################################
