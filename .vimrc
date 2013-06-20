@@ -1,3 +1,23 @@
+" Temporary block #####################################################
+
+" Automatically open my mappings in a different tab
+tabnew /home/st/ghar/home_config_files/.vim/vimrc_source_code/mappings.vim
+command Ghar !ghar install
+tabNext
+
+" Disable the worst keys for which I have added imaps
+inoremap a <Nop>
+inoremap [ <Nop>
+inoremap ] <Nop>
+inoremap { <Nop>
+inoremap } <Nop>
+inoremap 1 <Nop>
+inoremap = <Nop>
+
+" End temporary block #################################################
+
+
+
 " drop vi compatibility
 set nocompatible
 
