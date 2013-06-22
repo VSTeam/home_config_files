@@ -124,38 +124,9 @@ set wildmode=longest:full
 "   --
 "   for makefiles, specifically make sure noexpandtab and shiftwidth=8.
 " NOTE: this should really be moved to a filetype source
-source ~/.vim/vimrc_source_code/python.org.vim
+source ~/.vim_src/python.org.vim
 
 " general source code
-source ~/.vim/vimrc_source_code/tag_code.vim
-source ~/.vim/vimrc_source_code/abbreviations.vim
-source ~/.vim/vimrc_source_code/mappings.vim
-
-" #####################################################################
-" Temporary block #####################################################
-" #####################################################################
-
-" Automatically open my mappings in a different tab
-if has("gui_running")
-    tabnew /home/st/ghar/home_config_files/.vim/vimrc_source_code/mappings.vim
-    vs /home/st/ghar/home_config_files/.vimrc
-    tabNext
-endif
-
-" Disable the worst keys for which I have added imaps
-inoremap a <Nop>
-inoremap [ <Nop>
-inoremap ] <Nop>
-inoremap { <Nop>
-inoremap } <Nop>
-inoremap 1 <Nop>
-inoremap = <Nop>
-inoremap <Esc> <Nop>
-" This is very temporary, to break old habits. I need the double : so that in,
-" eg, the Fugitive window (where <CR> is mapped), I can still get it.
-noremap : <Nop>
-noremap :: :
-
-" #####################################################################
-" End temporary block #################################################
-" #####################################################################
+source ~/.vim_src/tag_code.vim
+source ~/.vim_src/abbreviations.vim
+source ~/.vim_src/mappings.vim
