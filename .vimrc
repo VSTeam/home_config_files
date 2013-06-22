@@ -10,10 +10,9 @@ set hlsearch
 set hidden
 set wildmenu
 set wildmode=longest:full
+set scrolloff=2
 
 " ################### EVERYTHING BELOW HERE NEEDS REFACTORING
-
-" basic appearance ------------------------------------------------------
 
 " color column 80
 set colorcolumn=80
@@ -65,16 +64,6 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 
-" Always show 2 lines around what is being edited for context
-set scrolloff=2
-
-" incsearch... hlsearch is default, but setting it doesn't hurt.
-
-" buffers can be invisible (not seen in an open window in any tab) but open.
-
-" tab completion in the ex command line will behave more like in bash
-
-" vimrc source code ----------------------------------------------------------
 
 " Discussion of filetype-dependent settings: 
 " Right now I use the python.org file below to do my filetype-dependent
@@ -122,9 +111,7 @@ set scrolloff=2
 "   --
 "   for makefiles, specifically make sure noexpandtab and shiftwidth=8.
 " NOTE: this should really be moved to a filetype source
-source ~/.vim_src/python.org.vim
-
-" general source code
 source ~/.vim_src/tag_code.vim
 source ~/.vim_src/abbreviations.vim
 source ~/.vim_src/mappings.vim
+source ~/.vim_src/python.org.vim

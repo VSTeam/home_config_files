@@ -2,69 +2,6 @@
 source ~/.vim_src/emacs_bindings.vim
 source ~/.vim_src/ergo_bindings.vim
 
-" Notes: (on available keys)
-"
-" In Normal mode, few keys are free...
-" <Space>, <Backspace>, \, and C-[ are free.
-" C-{hjkl} are free: I checked, and window commands are not affected by
-" remapping these.
-" ---
-" Virtually any alt key is free.
-" ---
-" <Tab> is used in the jump list. I should check whether it is important
-" before doing any mappings.
-"
-" In command line and insert mode, the following are reserved for bash emacs
-" <c-b>, <c-f>, <c-n>, <c-p>, <m-b>, <m-f>, <c-a>, <c-e>, <m-BS>, <c-d>, <m-d>
-" <c-k>, <c-u>
-"
-" Furthermore, in insert mode <C-t> and <M-t> are reserved for tabbing
-" Feel free to imap all other insert mode C and M combinations, and also Tab.
-" (C-t is builtin, M-t is a remapping of C-d, which I need for bash emacs)
-"
-" Furthermore in command mode <C-j> is reserved for jumping to the command line
-" window (this is a remapping of <C-f>) and <Tab> is reserved for command-line
-" completion. Other keys are free to remap *BUT* I'd prefer to keep my
-" command-line close to the bash shell.
-" 
-" The <Del> key is free in all modes in the sense that x or <c-d> do the same
-" thing.
-
-
-" Note: in insert mode, C-t and M-t are reserved for tabbing. Aside from
-" these and the bash commands, all other M and C combinations are available
-" for imaps, as is <Tab>
-
-
-" TODO
-"
-"
-" ALL OF THIS NEEDS TO BE RETHOUGHT.
-"
-" IN INSERT MODE, I CAN WORK WITH ALMOST ANY META OR CONTROL KEY NOT USED IN 
-"     EMACS OR ERGO. TAB IS ALSO AVAILABLE DEPENDING.
-"     THE ONLY BUILTINS I REALLY NEED ARE C-T and C-D.
-" IN NORMAL MODE, I CAN WORK WITH
-"     ANY META COMBO NOT USED IN ERGO OR EMACS... TRY TO AVOID META-T
-"     ANYTHING STARTING WITH SPACE OR BACKSACE
-"     WITH MINIMAL FIXES ON THE JUMP LIST, ANYTHING STARTING WITH TAB
-"     ANYTHING STARTING WITH C-H or C-K
-"     ANYTHING STARTING WITH \
-"     
-" NOTE: I FORGOT THAT THERE IS AN EXTRA COLON (2ND FINGER RIGHT HAND). THINK
-" ABOUT WHETHER THAT AFFECTS MY CHOICE OF ERGO MAPPINGS.
-
-" Try to avoid all common pinky keys in both normal and insert mode.
-"
-" Offload the space bar: my right thumb gets tired. Using backspace and alt
-" could help.
-"
-" Make it easy to get to : and / (this is part of offloading the pinkies)
-"
-" Make it easy to get to the vim command window
-"
-" Write notes on fuzzyfinder
-
 " general-purpose maps --------------------------------------------------------
 
 noremap <c-s> :w<CR>
@@ -77,6 +14,22 @@ noremap \ :noh<CR>
 "         p, P, y, Y, yy, d, D, dd, c, C, and cc all should work.
 noremap Y y$
 noremap <m-c> "+
+
+" TODO: split these operations up among <Space>, <BS>, and <Tab>.
+" The <CR> key shouldn't be used as a trigger key, but it can be as the
+" second key.
+"
+" Using <c-Space>, <c-BS>, and <m-Enter> also might work.
+" The reason to split them up is just to offload my right thum. It may be that
+" just removing the <Space><Space> command will be enough for that, in which
+" case I don't necessarily need to worry about it.
+"
+" C-h is also free. C-] is free but I wouldn't want to use it for common
+" commands. Any meta combination not claimed in emacs_bindings or ergo_bindings
+" is free.
+
+" repeat
+noremap <m-r> n.
 
 noremap <Space> <Nop>
 
@@ -113,7 +66,7 @@ noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 
-" Git shortcuts
+" Fugitive shortcuts
 <Space>gg :G
 <Space>gc :Gcommit --amend<CR>
 <Space>gs :Gst<CR>
