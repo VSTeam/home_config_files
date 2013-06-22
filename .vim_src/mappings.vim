@@ -1,4 +1,6 @@
-" Source file for maps
+" first my basic bindings that don't add functionality
+source ~/.vim_src/emacs_bindings.vim
+source ~/.vim_src/ergo_bindings.vim
 
 " Notes: (on available keys)
 "
@@ -62,26 +64,24 @@
 " Make it easy to get to the vim command window
 "
 " Write notes on fuzzyfinder
-noremap <Space> <Nop>
 
 " general-purpose maps --------------------------------------------------------
-noremap <CR> :
+
 noremap <c-s> :w<CR>
-noremap <Space><Space> :noh<CR>
+noremap \ :noh<CR>
 
-" clipboard copy and paste. Note paste is before cursor if C-p, after if M-p.
-noremap <c-p> "+P
-noremap <m-p> "+p
-noremap <c-y> "+y
-
-" It bothers my that dd vs D and cc vs C are consistent but not yy vs Y.
-" This fixes that.
+" CopyPaste: some fixes
+"     Y works analogously to C and D
+"     <c-m> is register prefix... 
+"         think of <m-c>y or <m-c>p as 'clipboard yank' and 'clipboard paste'
+"         p, P, y, Y, yy, d, D, dd, c, C, and cc all should work.
 noremap Y y$
+noremap <m-c> "+
+
+noremap <Space> <Nop>
 
 " Make Space-w work like C-w
-map <Space>w <c-w>
-
-" Extension maps --------------------------------------------------------------
+noremap <Space>w <c-w>
 
 " fuzzyfinder: 
 noremap <Space>b :FufBuffer<CR>
@@ -100,40 +100,54 @@ noremap <Space>vtj :vs<Cr>:tj
 noremap <Space>hta :sp<Cr>:ta
 noremap <Space>htj :sp<Cr>:tj
 
+" shortcut to build tags
+noremap <Space>t :Devtags<CR>
 
 " Nerdtree
 noremap <Space>n :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
-" General purpose insert mode maps --------------------------------------------
+" M-] v and M-] s chase tags in new windows
+noremap <m-]><m-h> :sp<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 
-" Notes regarding builtin insert mode stuff:
-" ------------------------------------------
-" Del and BS work fine. The arrow keys work, but I am trying to avoid them.
-" C-y inserts the character immediately above the cursor. This can be
-" super-useful on occasion.
+" Git shortcuts
+<Space>gg :G
+<Space>gc :Gcommit --amend<CR>
+<Space>gs :Gst<CR>
+<Space>gd :Gdi<CR>
+<Space>gp :Git push
 
-" Saving... C-s takes you out of insert mode *and* saves.
+" #################### BELOW HERE IS OKAY I THINK
+" #################### BELOW HERE IS OKAY I THINK
+" #################### BELOW HERE IS OKAY I THINK
+" #################### BELOW HERE IS OKAY I THINK
+
+" Insert mode -----------------------------------------------------------------
+
+" Completion: via <Tab>
+"    j for within-file, l for line, t for tag, o for omni
+"    if you do omni, you get a preview window. c will close it
+inoremap <Tab> <Nop>
+inoremap <Tab>j <c-n>
+inoremap <Tab>l <c-x><c-l>
+inoremap <Tab>t <c-x><c-]>
+inoremap <Tab>o <c-x><c-o>
+inoremap <Tab>c <c-c>:pc<CR>a
+
+" Exiting: C-s saves and exits. kj exits and adds a <CR>
+"    kj is very good in the command window.
 inoremap <c-s> <c-c>:w<CR>
-" Exiting... ESC and C-c work fine, but kj is faster on most keybards
-" Note: as a result, k looks funny when I first type it. Don't worry about it.
-inoremap kj <Esc>
-" Tab completion, most basic (think about changing this to omni completion)
-inoremap <Tab> <c-n>
+inoremap kj <Esc><CR>
 
-" Custom imaps leading with C-j -----------------------------------------------
-"
-inoremap <c-j> <Nop>
-" l, t, and o for line, tag, and omni completion. c to close previews.
-inoremap <c-j>l <c-x><c-l>
-inoremap <c-j>t <c-x><c-]>
-inoremap <c-j>o <c-x><c-o>
-inoremap <c-j>c <c-c>:pc<CR>a
-inoremap <c-j><c-l> <c-x><c-l>
-inoremap <c-j><c-t> <c-x><c-l>
-inoremap <c-j><c-o> <c-c>:pc<CR>a
+" Command mode ----------------------------------------------------------------
 
-" Custom imaps for char insertion, leading with C-k ---------------------------
+" Window: <c-f> was mapped for emacs bindings, so I mapped <c-d> to go to the
+" command line window. Mnemonic is eDit; thinking of this as an untabbing sort
+" of makes sense too.
+cnoremap <c-d> <c-f>
 
 " ****************************
 " Stuff that needs to be moved
@@ -141,4 +155,4 @@ inoremap <c-j><c-o> <c-c>:pc<CR>a
 
 " Breakpoint. This really belongs in a filetype source file.
 noremap <Space>p Oimport pudb; pudb.set_trace()<c-s>
-inoremap <c-j>p <CR>import pudb; pudb.set_trace()
+inoremap <Tab>p <CR>import pudb; pudb.set_trace()

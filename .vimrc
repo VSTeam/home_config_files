@@ -3,14 +3,17 @@ set nocompatible
 set nobackup
 set history=500
 set spelllang=en_us
+set nu
+set mouse=a
+set incsearch
+set hlsearch
+set hidden
+set wildmenu
+set wildmode=longest:full
+
+" ################### EVERYTHING BELOW HERE NEEDS REFACTORING
 
 " basic appearance ------------------------------------------------------
-
-" line numbers
-set nu
-
-" mouse in terminal (I use it mostly for window navigation and scaling)
-set mouse=a
 
 " color column 80
 set colorcolumn=80
@@ -66,15 +69,10 @@ set shiftwidth=4
 set scrolloff=2
 
 " incsearch... hlsearch is default, but setting it doesn't hurt.
-set incsearch
-set hlsearch
 
 " buffers can be invisible (not seen in an open window in any tab) but open.
-set hidden
 
 " tab completion in the ex command line will behave more like in bash
-set wildmenu
-set wildmode=longest:full
 
 " vimrc source code ----------------------------------------------------------
 

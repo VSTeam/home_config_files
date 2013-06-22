@@ -1,54 +1,47 @@
 " The following bindings should work in all modes.
-"
-" The only normal mode commands hidden here are
-"     <c-u> : opposite <c-d>, scrolls a half-screen up
-"     <c-i> : equivalent to <Tab>, has something to do w the jump list
-"     <c-o> : also related to jump list
 
-" Remember, : is not mapped because it is on 2nd finger of right hand.
+" main bindings section -------------------------------------------------------
 
-
-" mnemonically justified
-"   Semicolon
-"   equaL
-"   Divide
-"   Wxy -> z
-"   questiOn
-noremap <m-s> ;
-noremap <c-l> =
-noremap <m-w> z
-noremap <m-d> /
-noremap <c-o> ?
-" positionally justified
-"   j and f are easy, and A comes before a
-"   r and u are on opposite sides, and e and i are further to the outside
+" these are positional. They are the only <c- > commands here
 noremap <c-j> a
-noremap <m-f> A
-noremap <c-r> [
-noremap <c-u> ]
-noremap <c-e> {
-noremap <c-i> }
+noremap <c-l> A
+" mnemonics are seaRch or Ratio, Equals, roman numeral I, zerOh
+noremap <m-r> /
+noremap <m-e> =
+noremap <m-i> 1
+noremap <m-o> 0
+" mnemonics are Slice and Dict, lEft and Right
+noremap <m-s><m-e> [
+noremap <m-s><m-r> ]
+noremap <m-d><m-e> {
+noremap <m-d><m-r> }
 
-inoremap <m-s> ;
-inoremap <c-l> =
-inoremap <m-w> z
-inoremap <m-d> /
-inoremap <c-o> ?
 inoremap <c-j> a
-inoremap <m-f> A
-inoremap <c-r> [
-inoremap <c-u> ]
-inoremap <c-e> {
-inoremap <c-i> }
+inoremap <c-l> A
+inoremap <m-s> /
+inoremap <m-e> =
+inoremap <m-i> 1
+inoremap <m-o> 0
+inoremap <m-s><m-e> [
+inoremap <m-s><m-r> ]
+inoremap <m-d><m-e> {
+inoremap <m-d><m-r> }
 
-cnoremap <m-s> ;
-cnoremap <c-l> =
-cnoremap <m-w> z
-cnoremap <m-d> /
-cnoremap <c-o> ?
 cnoremap <c-j> a
-cnoremap <m-f> A
-cnoremap <c-r> [
-cnoremap <c-u> ]
-cnoremap <c-e> {
-cnoremap <c-i> }
+cnoremap <c-l> A
+cnoremap <m-s> /
+cnoremap <m-e> =
+cnoremap <m-i> 1
+cnoremap <m-o> 0
+cnoremap <m-s><m-e> [
+cnoremap <m-s><m-r> ]
+cnoremap <m-d><m-e> {
+cnoremap <m-d><m-r> }
+
+" Special case: colon ---------------------------------------------------------
+
+" <m-k> generates a colon. In normal mode, <c-k> goes to command window.
+noremap <c-k> q:i
+noremap <m-k> :
+inoremap <m-k> :
+cnoremap <m-k> :

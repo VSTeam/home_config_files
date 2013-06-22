@@ -11,13 +11,5 @@ command Devtags !ctags -R --exclude=".git" -L $HOME/.devtagsrc -f $HOME/devtags
 command Distags !ctags -R --exclude=".git" -L $HOME/.distagsrc -f $HOME/distags
 command Bigtags !ctags /bigdev/bottleneck -R --exclude=".git" --exclude="*.c" i
             \-f $HOME/bigtags
-" Shortcut for Devtags only
-noremap <Space>t :Devtags<CR>
 
 set tags=$HOME/devtags,$HOME/distags
-
-" M-] v and M-] s chase tags in new windows
-noremap <m-]><m-h> :sp<CR>:exec("tag ".expand("<cword>"))<CR>
-noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
-noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
-noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
