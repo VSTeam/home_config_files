@@ -100,6 +100,57 @@ Note that there are 2 mostly distinct use cases, text and macros. So typically,
 A-Z refer to the same registers. The difference is that if you copy or record
     a macro with a capital register, vim appends rather than replaces.
 
+# basic ex commands
+:w :e :x :=
+(range)m(lineno)    and   (range)t(line)   will [Move] or [copy To]
+If you want to use buffers for ex copy/paste command, you can:
+    (linerange)ya x     ...   yanks to buffer x
+    (lineno)pu x        ...   puts (pastes) buffer x after line (linenu)
+:(range)s/pattern/replacement/[gc]
+:g/pattern/(command)  ... search for pattern to get a line range, then
+                          run (command) on that line range, e.g.,
+                          g/def/nu gives line numbers of lines with 'def'.
+:(lineno)r (filename)   ...  reads in a file after (lineno) of current buffer.
+| is the command concatenator (it behaves like ; in shell, NOT like |)
+
+
+# line numbers/ranges
+Basic line ranges look like 23,56
+For any command that takes a range or number, a blank means current line.
+    In a line range, leaving one side of the `,` blank also means current line.
+Special line symbols include . for current line, $ for last line, 0 for the
+    beginning of file (1 works just as well some of the time, but you need 0
+    if you want to paste something in front of line 1). `%` means `0,$`.
+Relative lines are given by +(num) and -(num), they are relative to current 
+    line. + and - by themselves mean +1 and -1. Remember that you can omit
+    the `.` if that is one side of your line range.
+
+
+# Shell commands
+! escapes to the shell, :sh opens a shell *but* be aware they don't read 
+    bashrc so aliases aren't available.
+the ConqueTerm plugin fixes this, although it still isn't the greatest shell,
+    and the color interaction is a problem (that might be fixable)
+Generally it's preferable to use built-in commands like :make if you can.
+    If theres no built-in and you use a shell command regularly, it might be
+    worth creating a custom vim command to call it.
+Keep in mind that many shell tools, like git, have vim plugins like Fugitive
+    available so you can interact with them.
+Shell tools can be used inside vim for text purpose, in (loosely) two ways:
+    - Reading text in: example is :r(lineno) !date, which reads in the date
+      after the line given (by default, the current line). In this case,
+      the tool's stdin is determined by your call, but stdout is dumped in
+      the current buffer after the indicated line.
+    - Altering text: (linerange)!sort, for example, would treat the lines
+      in the linerange as stdin, and would replace that block with the output
+      of sort in the current buffer.
+    - This is likely to be error-prone, but you can undo any mistakes. If I
+      learn sed and awk well, there's some chance that I could find these
+      features handy. Hypothetically I could also write custom python code
+      and then use this, although presumably using vim-python would be better.
+
+
+
 *****************************
 STILL WORTH READING IN LTVAVE
 *****************************
