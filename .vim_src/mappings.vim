@@ -31,8 +31,8 @@ noremap <m-c> "+
 " For my use, S and R are free. I don't use R (I think there's no reason you
 " would want to in a modern terminal) and S does the same thing as cc.
 
-" repeat
-noremap <m-r> n.
+" repeat aGain
+noremap <m-g> n.
 
 noremap <Space> <Nop>
 

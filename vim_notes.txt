@@ -109,9 +109,11 @@ If you want to use buffers for ex copy/paste command, you can:
 :(range)s/pattern/replacement/[gc]
 :g/pattern/(command)  ... search for pattern to get a line range, then
                           run (command) on that line range, e.g.,
-                          g/def/nu gives line numbers of lines with 'def'.
+                          -g/def/nu gives line numbers of lines with 'def'.
+                          -g/patt/s/old/new would sub (the first case of) old 
+                           for new on every line containing patt.
 :(lineno)r (filename)   ...  reads in a file after (lineno) of current buffer.
-| is the command concatenator (it behaves like ; in shell, NOT like |)
+`|` is the command concatenator (it behaves like ; in shell, NOT like |)
 
 
 # line numbers/ranges
@@ -150,63 +152,87 @@ Shell tools can be used inside vim for text purpose, in (loosely) two ways:
       and then use this, although presumably using vim-python would be better.
 
 
+# Folding
+:help folding  ... also, there's a vimcast on folding
+-----------------------------------------------------
+If you execute a command like dd or >> on a fold, all linea are affected.
+methods include manual, indent, expr, syntax, marker
+   to change, :set foldmethod=(method)
+   you might need to do :set foldenable
+   Here I discuss only manual, since most commands are the same.
+to make a fold, do (count)zF or zf(motion/text object) or do it from visual.
+zj zk ]z [z : go to next or prev fold, go to top/bottom of current fold
+zc zo za zd : open, close, toggle, or delete one fold
+zC zO zA zD : open, close, toggle, or delete folds recursively
+zr zm zR zM : decreMent or incRement the fold level by 1 or to the min/max
+zE zi : eliminate all folds, toggle foldenable
+zN zn : these affect foldenable, but I'm not sure how they work.
 
-*****************************
-STILL WORTH READING IN LTVAVE
-*****************************
 
--page 55 through 124 is advanced vi stuff not covered in the notes above.
- much of it I know but need to add to this. The main thing I need to really
- learn is the full power of regexps in search and replace.
--page 169 documents vim's additions to the vi regexp language.
--Ch 14, starting p. 239, covers vim enhancements for programming. I really
- ought to know this stuff.
+# Indentation and Syntax
+LTVVE is not very useful, and the help pages would be good only if I had the 
+big picture. I need to read a blog on this to really get it.
 
-I should some sections of notes about tabs, buffers, and window, even though
-I don't plan to reread those sections of LTVAVE.
+
+# Completion
+:help completion
+----------------
+In insert mode, C-x enters completion mode. When there, do
+C-l C-n for line or keywork completionbased on current session
+C-k C-t C-s for dictionary thesaurus or spelling correction
+C-i C-] C-f for included files, tags, and filenames
+C-u C-o for user-defined or omni
+C-v for Vim command completion (use this in ex mode)
+C-d for C macro completion (really only useful in C)
+
+
+# Tags
+:help tags
+----------
+:ta :ts :tj :pta :pts :ptj :sta :sts :stj
+:tp and :tn will cycle through matches if you called :ta and got wrong one.
+:tags has 2 meanings: command to look at stack, and the environment variable
+                      saying where to look for tags files.
+                      (e.g., :set tags=file/path/one,path2)
+C-] or g<LeftMouse> and C-t work in vi mode
+
+
+# windows and tabs
+:sp :vs
+C-w plus... o, c, h, j, k, l, t, b, =, >, <, +, - 
+(Using the mouse for resizing and window switching is not a bad idea).
+:tabnew :tabn :tabp :tabc
+:tabm :tabm0 :tabm (nu) move a tab to end, start, (number)th.
+C-Pgup and C-pgdn work in place of :tabn and :tabp
+
+
+# buffers and the jump list
+:ls :bu (number) :bd :BD :bw :BW :bn :bp
+Special buffers:
+    command line window (q: q/ and q? take you here)
+    quickfix command errors (:cwindow)
+    quickfix locations (:lwindwo)
+    help buffers (:help [topic])
+    previw window (closed by :pc)
+
+
+# quickfix (c) and location (l) windows
+The quickfix window is used by vim's integration with make, pyflakes, flake8,
+and some others. It is tied to individual buffers. The location window has 
+parallel commands, but I'm not sure what it is used for. Vimgrep also uses this
+(there's a vimcast on it) but I haven't figured it out yet.
+:help quickfix
+------------
+:cw :lw :ccl :lcl     ... open and close quickfix and location windows.
+:cn :lne :cp :lp      ... previous and next error/location
+:col :cnew :lol :lnew ... go to older or newer error. Not sure what this means.
+<CR> C-w <Cr>         ... goto error/location (with new window if C-w)
+
+
+
 
 *** Most of the practical vim book is worth reading carefully ***
 *** I should go through VimCasts carefully at some point ***
-
-********************
-* Topics to master *
-********************
-
-Indentation: It would be nice to learn to write my own indentation control,
-             but at the least I should learn better ways to override auto
-             indent.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -217,52 +243,12 @@ Indentation: It would be nice to learn to write my own indentation control,
 #############################################################
 
 
+***********
+* RegExps *
+***********
+See Ch6, pp 71-94 if LTVVE for vi's regexp basics.
+See p 169 for a quick look at vim's extenstions.
 
-
-Search and Replace
-******************
-I already covered search (I need to learn patterns, tho).
-    One way to search-and replace is to do n. or N.
-    This is sometimes easier than trying to figure out the range for :s
-The general search pattern is :X/old/new(/gc), where X is line range.
-X can be blank (thisline), %(file), `3,44` (lines 3 to 44), `7,$` (7 to eof),
-    .,+ (this line and the next), -3,+5 (three lines earlier to 5 lines later).
-X can also be the output of a filter... :Xg/pattern returns the lines on which
-    `pattern` is found, so :Xg/pattern/s/old/new/gc will affect those lines
-    in range X (which itself could be the output of a filter but let's not get
-    crazy) in which pattern was found.
-Note: if you do a one-live substitution, that is :s/old/new/g, then you can
-    repeat it as many times as you like with just :s on new lines (until you
-    do a different substitution)
-Note: Both searches and substitutions can be much more useful with regular
-    expressions (as can shell commands)... not only can the regex's be useful,
-    but *not* knowing them can actually be a problem in that they mess up
-    your simple searches. See Ch6 of LTVVE (starts page 93 of pdf), which
-    is all about :s and regular expressions and their vim macro extensions.
-Note: this is more search than search-and-replace, but the / does emacs-style
-    incrsearch... EXCEPT if you forget to hit enter and instead hit C-c, you
-    go back to the starting point!
-
-Occasionally useful things
-**************************
-:sh,  :!(shell command), :=  (to find how many lines) 
-:r filename (appends that file to the open file)
-If you have spellcheck on, z= gives alternatives.
-
-
-
-Tabs, buffers, and Windows
-****************
-C-W ... t, b, arrow, p, c, o
-:tabnew, :tabclose, C-pgup, C-pgdn
-:bd, :BD, :bn, :bp, :ls, :b#  ... C-6 toggles 2 buffers, can be handy
-
-
-************
-* Appendix *
-************
-
-*Regular Expressions*
 The escape character, to treat any regexp character as text, is \, and
 of course \\ produces a text \. Other special characters are:
    / ---  the delimiter for the regexpr
