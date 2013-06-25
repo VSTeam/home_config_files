@@ -27,6 +27,9 @@ noremap <m-c> "+
 " C-h is also free. C-] is free but I wouldn't want to use it for common
 " commands. Any meta combination not claimed in emacs_bindings or ergo_bindings
 " is free.
+"
+" For my use, S and R are free. I don't use R (I think there's no reason you
+" would want to in a modern terminal) and S does the same thing as cc.
 
 " repeat
 noremap <m-r> n.
@@ -41,7 +44,9 @@ noremap <Space>b :FufBuffer<CR>
 noremap <Space>f :FufFile<CR>
 noremap <Space>d :FufDir<CR>
 
-" fuzzyfinder with auto-splitting:
+" fuzzyfinder with auto-splitting
+"     Note: this is sort of unnecessary. If you hit C-j or C-k instead
+"           of <CR> to select, it will split or vsplit.
 noremap <Space>hb :sp<CR>:FufBuffer<CR>
 noremap <Space>vb :vs<CR>:FufBuffer<CR>
 noremap <Space>hf :sp<CR>:FufFile<CR>
@@ -60,18 +65,18 @@ noremap <Space>t :Devtags<CR>
 noremap <Space>n :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
-" M-] v and M-] s chase tags in new windows
+" M-] v and M-] h chase tags in new windows
 noremap <m-]><m-h> :sp<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Fugitive shortcuts
-<Space>gg :G
-<Space>gc :Gcommit --amend<CR>
-<Space>gs :Gst<CR>
-<Space>gd :Gdi<CR>
-<Space>gp :Git push
+noremap <m-g>g :G
+noremap <m-g>c :Gcommit<Space>--amend<CR>
+noremap <m-g>s :Gst<CR>
+noremap <m-g>d :Gdi<CR>
+noremap <m-g>p :Git<Space>push
 
 " #################### BELOW HERE IS OKAY I THINK
 " #################### BELOW HERE IS OKAY I THINK
@@ -82,6 +87,7 @@ noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Completion: via <Tab>
 "    j for within-file, l for line, t for tag, o for omni
+"        if you need a mnemonic for j, I guess jeneral[sic] works.
 "    if you do omni, you get a preview window. c will close it
 inoremap <Tab> <Nop>
 inoremap <Tab>j <c-n>
