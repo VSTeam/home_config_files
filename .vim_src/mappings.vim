@@ -71,12 +71,12 @@ noremap <m-]>h :sp<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]><m-v> :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <m-]>v :vs<CR>:exec("tag ".expand("<cword>"))<CR>
 
-" Fugitive shortcuts
-noremap <m-g>g :G
-noremap <m-g>c :Gcommit<Space>--amend<CR>
-noremap <m-g>s :Gst<CR>
-noremap <m-g>d :Gdi<CR>
-noremap <m-g>p :Git<Space>push
+" fugitiVe shortcuts  (v for version control)
+noremap <m-v>g :G
+noremap <m-v>c :Gcommit<Space>--amend<CR>
+noremap <m-v>s :Gst<CR>
+noremap <m-v>d :Gdi<CR>
+noremap <m-v>p :Git<Space>push
 
 " #################### BELOW HERE IS OKAY I THINK
 " #################### BELOW HERE IS OKAY I THINK
