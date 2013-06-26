@@ -23,10 +23,6 @@ inoremap <m-r> /
 inoremap <m-e> =
 inoremap <m-i> 1
 inoremap <m-o> 0
-inoremap <m-s><m-e> [
-inoremap <m-s><m-r> ]
-inoremap <m-d><m-e> {
-inoremap <m-d><m-r> }
 inoremap <m-s> [
 inoremap <m-x> ]
 inoremap <m-d> {

@@ -5,7 +5,7 @@ source ~/.vim_src/ergo_bindings.vim
 " general-purpose maps --------------------------------------------------------
 
 noremap <c-s> :w<CR>
-noremap \ :noh<CR>
+noremap <BS> :noh<CR>
 
 " CopyPaste: some fixes
 "     Y works analogously to C and D
