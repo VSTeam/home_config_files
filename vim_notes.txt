@@ -229,93 +229,47 @@ parallel commands, but I'm not sure what it is used for. Vimgrep also uses this
 <CR> C-w <Cr>         ... goto error/location (with new window if C-w)
 
 
+# Patterns
+:help pattern.txt
+LTVAVE pp 71-81 have vi rules, pp 169-170 have vim rules
+LTVAVE pp 81-94 has examples
+# search patterns
+[xyz] matches x, y, or z
+[[:alpha:][:digit:]] and [[:alnum:]] will both match alphanumeric
+[[:lower:][:upper:]] will match any letter
+[[:graph:]] matches any printable character (non-whitespace)
+. matches any character
+^, & force the following/preceding symbol to be at the start/end of a line
+\<, \> force the following/preceding symbol to be at the start/end of a word
+* after any character or matcher matches any number of repeats (so
+    `.*` behaves like the shell's `*`
+~ refers to the last-used search pattern.
+Note that [] are special, but (), <>, and {} are not (by default)
+# vim only symbols not available in vi
+\s matches whitespace (it's like [[:blank:]])
+\S matches all others (it's like [[:graph:]])
+\r matches carriage returns for multi-line edits
+\| does alternations, like /bid\|ask
+* can be applied to something between `\(` and `\)`
+\{3} is like * except it matches exactly 3 (no \ is needed before the })
+\{3,7} would match anything between 3 and 7 matches of prev symbol
+# search or replacement patterns
+\ : leader for some special symbols, escapes all others
+\1, \2, ..., \9 : matches place-held patterns (see `\(` and `\)`).
+    so you can use these in the search pattern if you want to look for where 
+    the same pattern occcurs in 2 spots in a line, and you can also use them 
+    in replacements.
+# replacement patterns
+\u and \l : the following letter will be upper/lower cased (useful in 
+    combo with `\1`, etc)
+\U and \L, \e or \E: upper or lower case everything until the \e or \E.
+    If there is no \e or \E, it upper or lower cases to the end.
+& matches the entire search pattern
+# very magic and very no magic
+\v makes it unneceassary to put the \ in front of non-letter and non-number
+    special symbols (but you do now need a \ to escape them). This behavior
+    is more typical of regexp engines, e.g. the Python engine.
+\V makes it so any special character has to be escaped except for \ itself
+    and either / (if searching forward) or ? (if backward). All others are
+    taken literally.
 
-
-*** Most of the practical vim book is worth reading carefully ***
-*** I should go through VimCasts carefully at some point ***
-
-
-
-#############################################################
-#############################################################
-####################### OLD NOTES ###########################
-#############################################################
-#############################################################
-
-
-***********
-* RegExps *
-***********
-See Ch6, pp 71-94 if LTVVE for vi's regexp basics.
-See p 169 for a quick look at vim's extenstions.
-
-The escape character, to treat any regexp character as text, is \, and
-of course \\ produces a text \. Other special characters are:
-   / ---  the delimiter for the regexpr
-   . ---  allows any *single* character in that position
-   * ---  at the end of a string, allows 0 or more of the preceding character
-          (so trades* would match trade, trades, tradess, etc.)
-          If preceded by another special regexpr character (not escaped), it
-          will match whatever that is. So .* represents any string of any size.
-          Note that in most programs, * does what .* does here. (bad vi!)
-   ^ and $ --- requires the expression following/preceding it to be found at
-               the beginning/end of a line. I assume they strip whitespace 1st.
-   [abc] --- matches any character listed between the brackets.
-             You can use [a-c] to represent any character between a and c
-             in ascii coding... you should probably only use this for two
-             lowercase letters, two uppercase, or two digits.
-             Any combination of those rules is okay, for instance [1-9a-z.,]
-             will match any digit except zero, any lower case letter, and
-             any period or comma.
-    [:keywd:] --- used inside of [] to refer to POSIX classes
-          classes include
-            [:alpha:] [:lower:] [:upper:] [:alnum:] (alphanumeric)
-            [:space:] (whitespace) [:blank:] (space and tab only)
-            [:punct:] [:graph:] (visible--all but whitespace)
-            [:digit:] [:xdigit:] (hexadecimal digits)
-    [.unit.] --- Treats the string inside as a single unit. Used inside of []
-                 to do things like [[.bid.][.ask.]], which is otherwise hard
-                 to do.
-              note: there's also an [= =], but I doubt I'll find that useful.
-               See LTVVE page 99 of the pdf, 77 of the book.
-   ~ --- refers to whatever regular expression was last used. If it's used
-         as in the 'search for' pattern, it looks for the last 'search for'
-         pattern and if in the 'replace with' pattern it looks for the last
-         'replace with pattern'. The behavior has some quirks, so not 
-         recommended.
-   \<ab and ab\> --- These will look for when ab begins or ends a word,
-                     respectively (words being delimited by whitespace or
-                     punctuation). Note that you needn't escape < and >.
-There are also some funkier characters out there, some of which need to
-be escaped if you want to search for them:
-  & --- can only be used in the replacement string: it puts whetever the
-        search pattern was (could be a string, or a variable pattern in which
-        case it will use the actual string found for each instance) into the
-        replacement pattern, so for example you could use
-         :s/time/&s   as shorthand for :s/time/times.
-  \( and \) --- very useful but a bit complicated to explain. They delimit
-                'search variables' that can be referenced by \1, \2, \3, etc.
-                They should only be used in the search pattern.
-  or --- used to choose between variables as set using \( and \).
-  \1, \2 \3, etc --- used only in the replacement pattern, to refer to
-                     items from the search pattern marked by \( and \).
-  \u and \l --- In the context of the search-variables above, these can be
-                used to change the case of the first character of the
-                replacement. See LTVVE p99 (pdf) or 77 (book)
-  \U and \L, \e --- same as \u and \l except everything in the replacement
-                    string (not just the first letter) is forced to the
-                    desired case; you can stop it early by putting \e in
-                    to signal 'end of force case'
-      Now, we need an example:
-         %s/\(ask\) or \(bid\)/\2 or \1/
-            will swap 'ask' with 'bid' in the whole buffer. On the other hand
-         %s/\(ask\) or \(bid\)/\u\1 \u2/
-            will capitalize the first letter of all instances of 'bid' and 
-            'ask' in the buffer. 
-The rules above are fairly complete, but in order to absorb them you need
-to use them or regularly look at examples (you can't realistically use them
-until you've seen enough examples to at least think of it, after all).
-The book pp 103-116 (pdf numbering) has a lot of pattern-matching examples,
-and also examples of how to use various commands and options to get desired
-behavior. It is probably worth rereading periodically at least until I am
-happy with my ability to do search-and-replace without wasting time.
