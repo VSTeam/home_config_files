@@ -85,6 +85,9 @@ noremap <m-v>p :Git<Space>push
 
 " Insert mode -----------------------------------------------------------------
 
+" C-d is claimed by emacs bindings. So, we map C-u to untab
+inoremap <c-u> <c-d>
+
 " Completion: via <Tab>
 "    j for within-file, l for line, t for tag, o for omni
 "        if you need a mnemonic for j, I guess jeneral[sic] works.

@@ -25,6 +25,8 @@ y_ d_ Y* D yy dd p P x X
 remember that c-t and c-d are insert equivs of >> and <<
 u and c-r. Remember there *is* an undo tree if you need it, even if
            I'm not sure how to use it. The Gundo plugin can help.
+:set paste and :set nopaste are important when using the middle mouse
+    button or when using the terminal's paste while in insert mode.
 
 
 # text objects
@@ -233,6 +235,7 @@ parallel commands, but I'm not sure what it is used for. Vimgrep also uses this
 :help pattern.txt
 LTVAVE pp 71-81 have vi rules, pp 169-170 have vim rules
 LTVAVE pp 81-94 has examples
+http://vimregex.com/ has a chapter-length discussion
 # search patterns
 [xyz] matches x, y, or z
 [[:alpha:][:digit:]] and [[:alnum:]] will both match alphanumeric
