@@ -9,6 +9,13 @@ Use the gd command more.
 Use tags.
 Use c-j and c-k in fuzzyfinder.
 
+Plugins
+=======
+I should consider flake8, Gundo, Subvert, YankRing, SnipMate, Ack, Tagslist
+I need to learn more about fuzzyfinder's tags.
+
+Less likely: Abolish and LustyJuggler
+
 
 
 NOTES
@@ -20,8 +27,8 @@ i I a A r s c_ cc C o O
 # edits
 # Most of these accept visual mode selections, movement commands (in
 # which case they go from cursor to target) or text objects.
-y_ d_ Y* D yy dd p P x X
-> < gq J
+y_ d_ Y* D yy dd p P x X J
+> < gq gU (all of these take text objects or movements)
 remember that c-t and c-d are insert equivs of >> and <<
 u and c-r. Remember there *is* an undo tree if you need it, even if
            I'm not sure how to use it. The Gundo plugin can help.
@@ -38,7 +45,9 @@ i" a" i( a(   ...   here `(` is literal, not a `sentence` as in the movement
 
 # movements
 e E w W b B
-% ( ) { } [[ ]]    ... in python, the mosd useful are %, { & }, and [[ & ]]
+% ( ) { } [[ ]]    ... in python, the most useful are %, { & }, and [[ & ]]
+                       For reasons that aren't clear, [[ and ]] don't seem
+                       to work when used with commands like d or zf.
 [( ]) [{ ]}        ... in a brace-delimited language, [{ and ]} are impt.
 + - h j k l $ ^
 t_ T_ f_ F_ ; ,
