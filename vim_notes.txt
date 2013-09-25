@@ -21,6 +21,12 @@ Less likely: Abolish and LustyJuggler
 NOTES
 =====
 
+To change a package name or something like that in a whole codebase, try this:
+    vim (or :e) **/*.py
+    :argdo %s/(oldname)/(newname)/gc
+    :wa [you need to write all buffers, not just the open one]
+Note: you can also use :bufdo instead of :argdo.
+
 # Go into insert mode.
 i I a A r s c_ cc C o O
 

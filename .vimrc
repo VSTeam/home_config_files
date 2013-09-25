@@ -34,6 +34,7 @@ if has("gui_running")
     set background=dark
     colorscheme solarized
     set guifont=Monospace\ Bold\ 10
+    cd /devel
 else
     set background=light
     set t_Co=16
