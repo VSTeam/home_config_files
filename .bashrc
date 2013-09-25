@@ -11,7 +11,7 @@ alias de='cd devel'
 alias da='cd data'
 alias quickcython='python setup.py build_ext --inplace'
 
-alias dp='/usr/local/lib/python2.7/dist-packages/'
+alias dp='cd /usr/local/lib/python2.7/dist-packages/'
 
 # Tags. Dev tags are for my dev code. Dist tags, which shouldn't need to
 # be run often, are for dist package code (so I can get numpy, scipy,
