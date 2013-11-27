@@ -14,7 +14,13 @@ Plugins
 I should consider flake8, Gundo, Subvert, YankRing, SnipMate, Ack, Tagslist
 I need to learn more about fuzzyfinder's tags.
 
-Less likely: Abolish and LustyJuggler
+Less likely: Abolish and LustyJuggler. I should also think about using pathogen
+to manage my packages.
+
+Special-purpose: ropevim might have advantages. There are verious latex
+packages. latex-suite is the standard 'big' one. Smaller ones include tex-pdf
+(which only does compile, but apparently does it very nicely), tex9, and
+latex-box
 
 
 
@@ -41,6 +47,27 @@ u and c-r. Remember there *is* an undo tree if you need it, even if
 :set paste and :set nopaste are important when using the middle mouse
     button or when using the terminal's paste while in insert mode.
 
+# practical directory issues
+----------------------------
+:cd %:h changes to the current directory
+:cd - changes to the previous directory
+This is really good with latex: map something to do these commands
+     :cd %:h
+     :!pdflatex %:t (or %:p) --interaction=nonstopmode
+     :cd -
+  ...which would allow me to compile a .tex file in its current directory
+  (which is almost always what I want to do) without changing my working
+  directoy.
+Note:
+   the solution as given works, but isn't very good if there are compile
+   errors. The 'right' solution is to replace the !pdflatex call with
+   an appropriate built-in vim call so that the errors will go to the quick
+   fix window. But my guess is, to handle the directory issue, I need to
+   bracket that call (\ll is supposed to work with vim-latex) with the
+   directory commands.
+Also, I think this might work when working on test files, if I can find the
+right commands (this doesn't work, but is the general idea):
+    :!gnome-terminal -e ipython -c %run %:p
 
 # text objects
 :help text-objects

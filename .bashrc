@@ -148,4 +148,14 @@ fi
 # Turn off <c-s> and <c-q> in the terminal
 stty -ixon
 
+# virtualenv-wrapper stuff
+# NOTE this needs to go last because the virtualenvwrapper.sh script saves
+# the current $PATH, which means you want to be sure you already made all the
+# changes to $PATH *prior* to soucring virtualenvwrapper.
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh
+# this creates an alias to use IPython from the current virtualenv (if any)
+alias viper='python /usr/bin/ipython'
+
 #**********************  END OF FILE <.bashrc> *******************************
