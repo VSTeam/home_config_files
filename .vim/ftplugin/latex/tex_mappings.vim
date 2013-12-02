@@ -2,6 +2,9 @@
 
 
 " Abbreviations
+ab $$ \begin{equation*} " this one won't work at the end.
+                        " I would need to create a context-dependent
+                        " function to make it work at the end.
 ab \[ \begin{equation*}
 ab \] \end{equation*}
 
