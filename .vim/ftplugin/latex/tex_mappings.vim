@@ -18,3 +18,4 @@ ab epmat \end{pmatrix}
 ab eali \end{algin*}
 ab eeq \end{equation}
 
+:ab hlf \frac{1}{2}   
