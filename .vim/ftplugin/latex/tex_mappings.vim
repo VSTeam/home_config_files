@@ -15,7 +15,7 @@ ab beq \begin{equation}
 
 ab eitem \end{itemize}
 ab epmat \end{pmatrix}
-ab eali \end{algin*}
+ab eali \end{align*}
 ab eeq \end{equation}
 
 :ab hlf \frac{1}{2}   
